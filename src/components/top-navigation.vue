@@ -1,0 +1,55 @@
+<script setup lang="ts">
+import logoDarkBg from 'assets/icons-and-logos/logo-dark-bg.png'
+import BaseButton from 'components/base-button.vue'
+
+const isScrolled = ref(false)
+
+const handleScroll = () => {
+  const scrollPosition = window.scrollY
+  isScrolled.value = scrollPosition > 0
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+</script>
+
+<template>
+  <nav
+    :class="{ 'bg-gray-800': isScrolled, 'bg-transparent': !isScrolled }"
+    class="text-white w-full fixed top-0 z-10"
+  >
+    <div class="max-w-screen mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-6 h-16">
+          <div class="flex-shrink-0">
+            <img :src="logoDarkBg" class="h-16" />
+          </div>
+
+          <div class="hidden md:block">
+            <ul class="ml-4 flex space-x-4">
+              <li><a href="#" class="hover:text-gray-300">Home</a></li>
+              <li><a href="#" class="hover:text-gray-300">Movies</a></li>
+              <li><a href="#" class="hover:text-gray-300">TV Shows</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <ul class="ml-4 flex space-x-4">
+            <base-button
+              size="sm"
+              buttonStyle="link"
+              icon="i-heroicons-magnifying-glass"
+            />
+            <base-button buttonStyle="secondary" size="sm" label="Login" />
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</template>

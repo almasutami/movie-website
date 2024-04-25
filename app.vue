@@ -1,3 +1,5 @@
 <template>
-  <div class="bg-warning">Hello</div>
+  <nuxt-layout>
+    <nuxt-page />
+  </nuxt-layout>
 </template>
