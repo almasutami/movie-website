@@ -2,6 +2,11 @@
 import { fileURLToPath } from 'node:url'
 
 export default defineNuxtConfig({
+  app: {
+    head: {
+      title: 'Moviewebsite',
+    },
+  },
   devtools: { enabled: true },
   modules: ['@nuxt/ui', '@pinia/nuxt', '@nuxt/eslint'],
   css: ['~/assets/css/main.css'],

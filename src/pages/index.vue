@@ -27,7 +27,7 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
       >
         <!-- featured banner -->
         <div
-          class="w-full lg:h-[70vh] md:h-[60vh] h-[50vh] flex flex-col gap-2 align-middle text-white px-6 md:px-16 lg:px-20 md:py-32 py-24"
+          class="w-full lg:min-h-[60vh] md:min-h-[40vh] min-h-[20vh] flex flex-col gap-2 align-middle text-white px-6 md:px-16 lg:px-20 md:pt-40 pt-32"
         >
           <div
             class="text-3xl lg:text-5xl md:text-4xl font-bold drop-shadow-md"
@@ -42,8 +42,22 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
           >
             {{ featuredMovie?.overview }}
           </div>
-          <!-- rating, genre -->
-          <!-- see more button -->
+          <!-- rating -->
+          <div class="flex flex-row gap-2 items-center my-2">
+            <!-- details button -->
+            <base-button
+              icon="i-heroicons-information-circle"
+              buttonStyle="primary"
+              label="More details"
+            />
+            <u-button
+              class="!p-0"
+              icon="i-heroicons-star-solid"
+              variant="link"
+              color="yellow"
+            />
+            <div>{{ featuredMovie?.vote_average?.toFixed(1) }} / 10</div>
+          </div>
         </div>
         <!-- transition -->
         <div
@@ -54,7 +68,7 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
     </div>
 
     <!-- popular movies -->
-    <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] mb-5">
+    <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
       <card-slider :movies="popularMovies" />
     </div>
   </nuxt-layout>
