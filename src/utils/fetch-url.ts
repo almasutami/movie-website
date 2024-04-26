@@ -1,5 +1,4 @@
-const defaultUrl =
-  'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
+const defaultUrl = 'https://api.themoviedb.org/3/movie/popular?page=1'
 
 const options = {
   method: 'GET',
@@ -14,6 +13,7 @@ export const fetchAPI = async (url: string) => {
   const fetchUrl = url || defaultUrl
   const response = await fetch(fetchUrl, options)
   const responseJSON = await response.json()
+  console.log(fetchUrl)
   console.log(responseJSON)
 
   return responseJSON

@@ -68,14 +68,9 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
       </div>
     </div>
 
-    <!-- popular movies -->
+    <!-- list all movies -->
     <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
-      <card-slider :movies="popularMovies" type="movies" />
-    </div>
-
-    <!-- popular series -->
-    <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
-      <card-slider :tv-series="tvSeriesInLandingPage" type="tv-series" />
+      <card-slider :data="popularMovies" type="movies" />
     </div>
   </nuxt-layout>
 </template>

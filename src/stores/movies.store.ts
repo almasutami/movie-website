@@ -20,7 +20,7 @@ interface SpokenLanguage {
   iso_639_1: string
   name: string
 }
-export interface Movie {
+export interface MovieDetails {
   adult: boolean
   backdrop_path: string
   belongs_to_collection: null
@@ -48,8 +48,26 @@ export interface Movie {
   vote_count: number
 }
 
+export interface Movie {
+  adult: boolean
+  backdrop_path: string
+  genre_ids: string[]
+  id: number
+  original_language: string
+  original_title: string
+  overview: string
+  popularity: number
+  poster_path: string
+  release_date: string
+  title: string
+  video: boolean
+  vote_average: number
+  vote_count: number
+}
+
 interface State {
   moviesInLandingPage: Movie[]
+  currentMovie?: MovieDetails
   listMovieLoading: boolean
 }
 
@@ -59,12 +77,13 @@ export const useMovieStore = defineStore('movie-store', {
   state: (): State => ({
     moviesInLandingPage: [],
     listMovieLoading: false,
+    currentMovie: undefined,
   }),
   actions: {
     async listPopularMoviesForLandingPage() {
       this.listMovieLoading = true
       const response = await fetchAPI(
-        'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
+        'https://api.themoviedb.org/3/movie/popular?page=1'
       )
       this.listMovieLoading = false
 
