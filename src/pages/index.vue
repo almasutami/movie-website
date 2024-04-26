@@ -4,15 +4,18 @@ import { getMovieBackdrop } from 'utils/movie-backdrop'
 import CardRender from 'components/card-render.vue'
 
 const movieStore = useMovieStore()
-const { moviesInLandingPage } = storeToRefs(movieStore)
-const { listPopularMoviesForLandingPage } = useMovieStore()
+const { moviesInLandingPage, listMovieGenreLoading, genres } =
+  storeToRefs(movieStore)
+const { listPopularMoviesForLandingPage, getGenreName, fetchAllMovieGenres } =
+  useMovieStore()
 const tvSeriesStore = useTvSeriesStore()
 const { tvSeriesInLandingPage } = storeToRefs(tvSeriesStore)
 const { listPopularTvSeriesForLandingPage } = useTvSeriesStore()
 
-onMounted(() => {
-  listPopularMoviesForLandingPage()
-  listPopularTvSeriesForLandingPage()
+onMounted(async () => {
+  await fetchAllMovieGenres()
+  await listPopularMoviesForLandingPage()
+  await listPopularTvSeriesForLandingPage()
 })
 
 const featuredMovie = computed(() => moviesInLandingPage.value?.[0])
@@ -43,13 +46,34 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
           >
             {{ featuredMovie?.overview }}
           </div>
+          <!-- genres -->
+          <div
+            v-if="!listMovieGenreLoading"
+            class="flex flex-row gap-2 items-center"
+          >
+            <div
+              v-for="genreId of featuredMovie?.genre_ids?.slice(0, 3)"
+              :key="genreId"
+            >
+              <u-badge color="black" variant="solid">{{
+                getGenreName(genreId)
+              }}</u-badge>
+            </div>
+            <div v-if="featuredMovie?.genre_ids?.length > 3">
+              <u-badge color="black" variant="solid">more +</u-badge>
+            </div>
+          </div>
+          <div v-else>
+            <u-skeleton class="w-20 h-6" />
+          </div>
+
           <!-- rating -->
           <div class="flex flex-row gap-2 items-center my-2">
             <!-- details button -->
             <base-button
               icon="i-heroicons-information-circle"
               buttonStyle="primary"
-              label="More details"
+              label="See details"
             />
             <u-button
               class="!p-0"

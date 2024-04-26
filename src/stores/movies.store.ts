@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { fetchAPI } from 'utils/fetch-url'
 
 interface Genre {
-  id: string
+  id: number
   name: string
 }
 interface ProductionCountry {
@@ -51,7 +51,7 @@ export interface MovieDetails {
 export interface Movie {
   adult: boolean
   backdrop_path: string
-  genre_ids: string[]
+  genre_ids: number[]
   id: number
   original_language: string
   original_title: string
@@ -69,7 +69,9 @@ interface State {
   moviesInLandingPage: Movie[]
   currentMovie?: MovieDetails
   listMovieLoading: boolean
+  listMovieGenreLoading: boolean
   moviesInDiscoverPage: Movie[]
+  genres: Genre[]
 }
 
 export const activeStatusKey = 'active-status'
@@ -79,9 +81,22 @@ export const useMovieStore = defineStore('movie-store', {
     moviesInLandingPage: [],
     listMovieLoading: false,
     currentMovie: undefined,
+    listMovieGenreLoading: false,
     moviesInDiscoverPage: [],
+    genres: [],
   }),
   actions: {
+    async fetchAllMovieGenres() {
+      this.listMovieGenreLoading = true
+      const response = await fetchAPI(
+        'https://api.themoviedb.org/3/genre/movie/list'
+      )
+      this.listMovieGenreLoading = false
+
+      this.genres = response?.genres
+
+      return response
+    },
     async listPopularMoviesForLandingPage() {
       this.listMovieLoading = true
       const response = await fetchAPI(
@@ -104,6 +119,11 @@ export const useMovieStore = defineStore('movie-store', {
       this.moviesInDiscoverPage = response?.results
 
       return response
+    },
+  },
+  getters: {
+    getGenreName: (state) => (id: number) => {
+      return state?.genres?.find((genre) => genre?.id === id)?.name
     },
   },
 })
