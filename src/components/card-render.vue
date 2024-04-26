@@ -8,10 +8,12 @@ const props = defineProps({
   movies: {
     type: Array as PropType<Movie[]>,
     required: false,
+    default: () => [],
   },
   tvSeries: {
     type: Array as PropType<TvSeries[]>,
     required: false,
+    default: () => [],
   },
   type: {
     type: String as PropType<'movies' | 'tv-series'>,

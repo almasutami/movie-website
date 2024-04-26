@@ -4,8 +4,7 @@ import { getMovieBackdrop } from 'utils/movie-backdrop'
 import CardRender from 'components/card-render.vue'
 
 const movieStore = useMovieStore()
-const { moviesInLandingPage, listMovieGenreLoading, genres } =
-  storeToRefs(movieStore)
+const { moviesInLandingPage, listMovieGenreLoading } = storeToRefs(movieStore)
 const { listPopularMoviesForLandingPage, getGenreName, fetchAllMovieGenres } =
   useMovieStore()
 const tvSeriesStore = useTvSeriesStore()
@@ -72,7 +71,7 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
             <!-- details button -->
             <base-button
               icon="i-heroicons-information-circle"
-              buttonStyle="primary"
+              button-style="primary"
               label="See details"
             />
             <u-button

@@ -1257,13 +1257,13 @@ __metadata:
   linkType: hard
 
 "@headlessui/vue@npm:^1.7.19":
-  version: 1.7.20
-  resolution: "@headlessui/vue@npm:1.7.20"
+  version: 1.7.21
+  resolution: "@headlessui/vue@npm:1.7.21"
   dependencies:
     "@tanstack/vue-virtual": ^3.0.0-beta.60
   peerDependencies:
     vue: ^3.2.0
-  checksum: 8166a8a991c4ebfde167c467b74e753c239bf0902dfd88ab32a6c431d23f986b5bef555a11db7ff061bd292c61267a28b40f70b2981e459dc651ef9bbbd92e54
+  checksum: 1373f5ec58a632b18008e708317643f9c4817708e67e15a4f20429b7301d9e9094be88b9c26d33c9a73a284fe1418b1f7f510d88466c77fbf9d1731bf57f6c84
   languageName: node
   linkType: hard
 
@@ -2582,8 +2582,8 @@ __metadata:
   linkType: hard
 
 "@tailwindcss/typography@npm:^0.5.12":
-  version: 0.5.12
-  resolution: "@tailwindcss/typography@npm:0.5.12"
+  version: 0.5.13
+  resolution: "@tailwindcss/typography@npm:0.5.13"
   dependencies:
     lodash.castarray: ^4.4.0
     lodash.isplainobject: ^4.0.6
@@ -2591,7 +2591,7 @@ __metadata:
     postcss-selector-parser: 6.0.10
   peerDependencies:
     tailwindcss: "*"
-  checksum: b2037e73d83ad5bd8ca00b22314feb6c72706bf1ae5be087c41805923f06e90bc95c7410f071a36f1d72f9cff850a369e16321f12f7d6e85d78f9fedd8e480ac
+  checksum: 44ee7417de2aa1facd3e5a85dfc509d94f8bfec1fe422a75f141cb6bf5f19e1da31c060fc7aa1b8f880bd98c1fc6210cf5b5124a20335b1a3cd6b3e1a2476c25
   languageName: node
   linkType: hard
 
@@ -3953,6 +3953,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"change-case@npm:^5.4.4":
+  version: 5.4.4
+  resolution: "change-case@npm:5.4.4"
+  checksum: a22a25a763719658424ffbcd41e931d2d19cc22399cc765dca447fbe1eaf13e179d5e8ab1677af75f2e814dbddf74e42ffdecb526cd5bc906cc859f62aa154b2
+  languageName: node
+  linkType: hard
+
 "chokidar@npm:^3.5.1, chokidar@npm:^3.5.3, chokidar@npm:^3.6.0":
   version: 3.6.0
   resolution: "chokidar@npm:3.6.0"
@@ -4931,9 +4938,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.749
-  resolution: "electron-to-chromium@npm:1.4.749"
-  checksum: 30bffd43cf198c3b71afa0696da6ce37b31dad789419580d90cd086bb935b4894c6aa153a1dd37d8d379c845a1a8b3abe6aba89e0dc71082d0f032fb7351a045
+  version: 1.4.750
+  resolution: "electron-to-chromium@npm:1.4.750"
+  checksum: d1a5f1e9942c90dea8e1f60555ea9c0053676a8c945a82b8acd040fcae9173cdaa0127a1a2f563c96aa3d64de1b970d4b8a3245303c614ea7a564fc389c5d8c1
   languageName: node
   linkType: hard
 
@@ -7936,6 +7943,7 @@ __metadata:
     "@nuxt/ui": ^2.15.2
     "@pinia/nuxt": ^0.5.1
     autoprefixer: ^10.4.19
+    change-case: ^5.4.4
     cspell: ^8.7.0
     eslint: ^9.1.1
     globals: ^15.0.0
