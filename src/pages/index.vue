@@ -54,7 +54,7 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
     </div>
 
     <!-- popular movies -->
-    <div class="bg-[rgba(30,30,30,1)] min-h-[40vh]">
+    <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] mb-5">
       <card-slider :movies="popularMovies" />
     </div>
   </nuxt-layout>
