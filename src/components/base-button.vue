@@ -24,7 +24,7 @@ const props = defineProps({
     type: String,
     default: null,
   },
-  iconPosition: {
+  trailing: {
     type: Boolean,
     default: null,
   },
@@ -47,10 +47,10 @@ const buttonVariant = computed(() => {
 })
 
 const buttonColor = computed(() => {
-  let color = 'black'
+  let color = 'gray'
   switch (props.buttonStyle) {
     case 'primary':
-      color = 'black'
+      color = 'gray'
       break
     case 'secondary':
       color = 'white'
@@ -70,7 +70,7 @@ const buttonColor = computed(() => {
     :loading="props?.loading"
     :label="props?.label"
     :icon="props?.icon"
-    :trailing="iconPosition"
+    :trailing="props?.trailing"
     :variant="buttonVariant"
     :color="buttonColor"
   />
