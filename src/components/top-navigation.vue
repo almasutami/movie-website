@@ -62,10 +62,10 @@ onUnmounted(() => {
           <ul class="ml-4 flex space-x-4">
             <base-button
               size="sm"
-              buttonStyle="link"
+              button-style="link"
               icon="i-heroicons-magnifying-glass"
             />
-            <base-button buttonStyle="secondary" size="sm" label="Login" />
+            <base-button button-style="secondary" size="sm" label="Login" />
           </ul>
         </div>
       </div>
