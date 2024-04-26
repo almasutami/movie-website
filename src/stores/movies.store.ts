@@ -20,7 +20,7 @@ interface SpokenLanguage {
   iso_639_1: string
   name: string
 }
-interface Movie {
+export interface Movie {
   adult: boolean
   backdrop_path: string
   belongs_to_collection: null

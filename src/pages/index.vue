@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { getMovieBackdrop } from 'utils/movie-backdrop'
+import CardSlider from 'components/card-slider.vue'
 
 const movieStore = useMovieStore()
 const { moviesInLandingPage } = storeToRefs(movieStore)
@@ -26,7 +27,7 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
       >
         <!-- featured banner -->
         <div
-          class="w-full h-[70vh] flex flex-col gap-2 align-middle text-white py-16 lg:p-[100px] md:p-[80px] p-[30px]"
+          class="w-full lg:h-[70vh] md:h-[60vh] h-[50vh] flex flex-col gap-2 align-middle text-white px-6 md:px-16 lg:px-20 md:py-32 py-24"
         >
           <div
             class="text-3xl lg:text-5xl md:text-4xl font-bold drop-shadow-md"
@@ -53,8 +54,8 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
     </div>
 
     <!-- popular movies -->
-    <div class="bg-[rgba(30,30,30,1)]">
-      {{ popularMovies }}
+    <div class="bg-[rgba(30,30,30,1)] min-h-[40vh]">
+      <card-slider :movies="popularMovies" />
     </div>
   </nuxt-layout>
 </template>
