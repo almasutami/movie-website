@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Movie } from 'stores/movies.store'
+// import type { Movie } from 'stores/movies.store'
 import { getMoviePoster } from 'utils/movie-backdrop'
 
 const props = defineProps({
   movies: {
-    type: Array as PropType<Movie[]>,
+    type: Array,
     required: true,
   },
 })
@@ -16,9 +16,9 @@ const props = defineProps({
     <div class="overflow-scroll no-scrollbar py-4">
       <div class="flex gap-4">
         <div
-          class="w-full h-full"
           v-for="movie of props.movies"
           :key="movie.id"
+          class="w-full h-full"
         >
           <div class="w-40 md:w-44">
             <img :src="getMoviePoster(movie?.poster_path)" class="rounded-md" />
