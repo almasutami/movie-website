@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import logoDarkBg from 'assets/icons-and-logos/logo-dark-bg.png'
+import logoDarkBg from '@/assets/icons-and-logos/logo-dark-bg.png'
 import BaseButton from 'components/base-button.vue'
 
 const isScrolled = ref(false)
@@ -16,6 +16,30 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
+
+interface TabItem {
+  label: string
+  to: string
+  icon: string
+}
+
+const tabItems = [
+  {
+    label: 'Home',
+    to: '/',
+    icon: 'i-heroicons-home',
+  },
+  {
+    label: 'Movies',
+    to: '/movies',
+    icon: 'i-heroicons-film',
+  },
+  // {
+  //   label: 'TV Series',
+  //   to: '/tv-series',
+  //   icon: 'i-heroicons-tv',
+  // },
+] as TabItem[]
 </script>
 
 <template>
@@ -34,27 +58,20 @@ onUnmounted(() => {
           </div>
 
           <div class="hidden md:block">
-            <ul class="ml-4 flex space-x-6">
-              <li><a href="#" class="hover:text-gray-300">Home</a></li>
-              <li>
+            <div class="ml-4 flex space-x-6 text-gray-300">
+              <nuxt-link
+                v-for="tab of tabItems"
+                :key="tab.label"
+                :to="tab.to"
+                class="hover:cursor-pointer"
+                exact-active-class=" text-base font-semibold text-white"
+              >
                 <div class="flex flex-row gap-2 items-center">
-                  <u-icon name="i-heroicons-film" /><a
-                    href="#"
-                    class="hover:text-gray-300"
-                    >Movies</a
-                  >
+                  <u-icon :name="tab?.icon" />
+                  <div class="hover:text-gray-300">{{ tab.label }}</div>
                 </div>
-              </li>
-              <li>
-                <div class="flex flex-row gap-2 items-center">
-                  <u-icon name="i-heroicons-tv" /><a
-                    href="#"
-                    class="hover:text-gray-300"
-                    >TV Shows</a
-                  >
-                </div>
-              </li>
-            </ul>
+              </nuxt-link>
+            </div>
           </div>
         </div>
 

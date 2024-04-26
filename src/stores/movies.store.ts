@@ -69,6 +69,7 @@ interface State {
   moviesInLandingPage: Movie[]
   currentMovie?: MovieDetails
   listMovieLoading: boolean
+  moviesInDiscoverPage: Movie[]
 }
 
 export const activeStatusKey = 'active-status'
@@ -78,6 +79,7 @@ export const useMovieStore = defineStore('movie-store', {
     moviesInLandingPage: [],
     listMovieLoading: false,
     currentMovie: undefined,
+    moviesInDiscoverPage: [],
   }),
   actions: {
     async listPopularMoviesForLandingPage() {
@@ -88,6 +90,18 @@ export const useMovieStore = defineStore('movie-store', {
       this.listMovieLoading = false
 
       this.moviesInLandingPage = response?.results
+
+      return response
+    },
+    async discoverMovies(url: string) {
+      this.listMovieLoading = true
+      const fetchUrl =
+        url ||
+        'https://api.themoviedb.org/3/discover/movie?page=1&sort_by=popularity.desc'
+      const response = await fetchAPI(fetchUrl)
+      this.listMovieLoading = false
+
+      this.moviesInDiscoverPage = response?.results
 
       return response
     },

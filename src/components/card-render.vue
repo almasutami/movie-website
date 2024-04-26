@@ -17,6 +17,10 @@ const props = defineProps({
     type: String as PropType<'movies' | 'tv-series'>,
     required: true,
   },
+  mode: {
+    type: String as PropType<'slider' | 'full-page'>,
+    required: true,
+  },
 })
 
 const data = computed(() => {
@@ -36,6 +40,7 @@ const data = computed(() => {
       </div>
       <div>
         <base-button
+          v-if="props?.mode === 'slider'"
           button-style="link"
           icon="i-heroicons-chevron-right-20-solid"
           :label="'See more'"
@@ -43,10 +48,22 @@ const data = computed(() => {
         />
       </div>
     </div>
-    <div class="overflow-scroll no-scrollbar py-1">
-      <div class="flex gap-4 items-center">
-        <div v-for="movie of data" :key="movie.id" class="w-full h-full">
-          <div class="hover:cursor-pointer w-40 md:w-44 hover:scale-110">
+    <div
+      class="no-scrollbar py-1"
+      :class="props?.mode === 'slider' ? 'overflow-scroll' : ''"
+    >
+      <div
+        :class="
+          props?.mode === 'slider'
+            ? 'flex gap-4 items-center'
+            : 'flex gap-4 items-center flex-wrap'
+        "
+      >
+        <div v-for="movie of data" :key="movie.id">
+          <div
+            class="hover:cursor-pointer w-40 md:w-44 hover:scale-110"
+            :class="props?.mode === 'slider' ? 'w-40 md:w-44' : 'w-40 md:w-52'"
+          >
             <img :src="getMoviePoster(movie?.poster_path)" />
           </div>
         </div>

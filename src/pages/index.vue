@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { getMovieBackdrop } from 'utils/movie-backdrop'
-import CardSlider from 'components/card-slider.vue'
+import CardRender from 'components/card-render.vue'
 
 const movieStore = useMovieStore()
 const { moviesInLandingPage } = storeToRefs(movieStore)
@@ -70,12 +70,16 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
 
     <!-- popular movies -->
     <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
-      <card-slider :movies="popularMovies" type="movies" />
+      <card-render :movies="popularMovies" mode="slider" type="movies" />
     </div>
 
     <!-- popular series -->
     <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
-      <card-slider :tv-series="tvSeriesInLandingPage" type="tv-series" />
+      <card-render
+        :tv-series="tvSeriesInLandingPage"
+        mode="slider"
+        type="tv-series"
+      />
     </div>
   </nuxt-layout>
 </template>
