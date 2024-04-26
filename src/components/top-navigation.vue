@@ -20,10 +20,13 @@ onUnmounted(() => {
 
 <template>
   <nav
-    :class="{ 'bg-gray-800': isScrolled, 'bg-transparent': !isScrolled }"
+    :class="{
+      'bg-[rgba(30,30,30,1)]': isScrolled,
+      'bg-transparent': !isScrolled,
+    }"
     class="text-white w-full fixed top-0 z-10"
   >
-    <div class="max-w-screen mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-screen mx-auto pr-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center gap-6 h-16">
           <div class="flex-shrink-0">
@@ -31,10 +34,26 @@ onUnmounted(() => {
           </div>
 
           <div class="hidden md:block">
-            <ul class="ml-4 flex space-x-4">
+            <ul class="ml-4 flex space-x-6">
               <li><a href="#" class="hover:text-gray-300">Home</a></li>
-              <li><a href="#" class="hover:text-gray-300">Movies</a></li>
-              <li><a href="#" class="hover:text-gray-300">TV Shows</a></li>
+              <li>
+                <div class="flex flex-row gap-2 items-center">
+                  <u-icon name="i-heroicons-film" /><a
+                    href="#"
+                    class="hover:text-gray-300"
+                    >Movies</a
+                  >
+                </div>
+              </li>
+              <li>
+                <div class="flex flex-row gap-2 items-center">
+                  <u-icon name="i-heroicons-tv" /><a
+                    href="#"
+                    class="hover:text-gray-300"
+                    >TV Shows</a
+                  >
+                </div>
+              </li>
             </ul>
           </div>
         </div>
