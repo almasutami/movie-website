@@ -1,10 +1,10 @@
 <script setup lang="ts">
-// import type { Movie } from 'stores/movies.store'
+import type { Movie } from 'stores/movies.store'
 import { getMoviePoster } from 'utils/movie-backdrop'
 
 const props = defineProps({
   movies: {
-    type: Array,
+    type: Array as PropType<Movie[]>,
     required: true,
   },
 })

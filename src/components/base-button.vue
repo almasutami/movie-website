@@ -31,25 +31,35 @@ const props = defineProps({
 })
 
 const buttonVariant = computed(() => {
+  let variant = 'solid'
   switch (props.buttonStyle) {
     case 'primary':
-      return 'solid'
+      variant = 'solid'
+      break
     case 'secondary':
-      return 'outline'
+      variant = 'outline'
+      break
     case 'link':
-      return 'ghost'
+      variant = 'ghost'
+      break
   }
+  return variant
 })
 
 const buttonColor = computed(() => {
+  let color = 'black'
   switch (props.buttonStyle) {
     case 'primary':
-      return 'black'
+      color = 'black'
+      break
     case 'secondary':
-      return 'white'
+      color = 'white'
+      break
     case 'link':
-      return 'black'
+      color = 'black'
+      break
   }
+  return color
 })
 </script>
 

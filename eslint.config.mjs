@@ -1,17 +1,9 @@
-import js from '@eslint/js'
-import eslintConfigPrettier from 'eslint-config-prettier'
-import tseslint from 'typescript-eslint'
-import pluginVue from 'eslint-plugin-vue'
+import withNuxt from './.nuxt/eslint.config.mjs'
 
-export default [
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...pluginVue.configs['flat/recommended'],
-  eslintConfigPrettier,
-  {
-    rules: {
-      'vue/multi-word-component-names': 'off',
-      'no-undef': 'off',
-    },
+export default withNuxt({
+  rules: {
+    'vue/multi-word-component-names': 'off',
+    'no-undef': 'off',
+    'vue/html-self-closing': 'off',
   },
-]
+})
