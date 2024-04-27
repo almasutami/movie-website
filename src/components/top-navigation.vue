@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import logoDarkBg from '@/assets/icons-and-logos/logo-dark-bg.png'
-import BaseButton from 'components/base-button.vue'
+import iconDarkBg from '@/assets/icons-and-logos/icon-dark-bg.png'
 
 const isScrolled = ref(false)
 const router = useRouter()
@@ -54,27 +54,44 @@ const tabItems = [
     class="text-white w-full fixed top-0 z-10"
   >
     <div class="max-w-screen mx-auto pr-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <div class="flex items-center gap-6 h-16">
-          <div class="flex-shrink-0">
+      <div class="blcok md:flex items-center justify-between h-16">
+        <div
+          class="flex justify-between md:justify-normal items-center gap-6 h-16"
+        >
+          <div class="flex-shrink-0 hidden md:block">
             <img :src="logoDarkBg" class="h-16" />
           </div>
+          <div class="flex-shrink-0 block md:hidden">
+            <img :src="iconDarkBg" class="h-16" />
+          </div>
 
-          <div class="hidden md:block">
-            <div class="ml-4 flex space-x-6 text-gray-300">
-              <nuxt-link
-                v-for="tab in tabItems"
-                :key="tab.label"
-                :to="tab.to"
-                class="hover:cursor-pointer"
-                exact-active-class=" text-base font-semibold text-white"
-              >
-                <div class="flex flex-row gap-2 items-center">
-                  <u-icon :name="tab?.icon" />
-                  <div class="hover:text-gray-300">{{ tab.label }}</div>
+          <div class="ml-4 flex space-x-8 text-gray-300 items-center">
+            <nuxt-link
+              v-for="tab in tabItems"
+              :key="tab.label"
+              :to="tab.to"
+              class="hover:cursor-pointer"
+              exact-active-class=" text-base font-semibold text-white"
+            >
+              <div class="flex-row gap-2 items-center hidden md:flex">
+                <u-icon :name="tab?.icon" />
+                <div class="hover:text-gray-300 hidden md:block">
+                  {{ tab.label }}
                 </div>
-              </nuxt-link>
-            </div>
+              </div>
+
+              <div class="flex-row gap-2 items-center flex md:hidden">
+                <u-icon :name="tab?.icon" />
+              </div>
+            </nuxt-link>
+
+            <nuxt-link to="/search" class="md:hidden">
+              <base-button
+                size="sm"
+                button-style="link"
+                icon="i-heroicons-magnifying-glass"
+              />
+            </nuxt-link>
           </div>
         </div>
 
@@ -84,7 +101,7 @@ const tabItems = [
               size="xl"
               icon="i-heroicons-magnifying-glass-20-solid"
               variant="none"
-              class="w-full"
+              class="w-full hidden md:block"
               :model-value="searchQuery"
               @change="
                 (value: string) => {
