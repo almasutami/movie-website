@@ -113,16 +113,19 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
         :loading="listMovieLoading"
         mode="slider"
         type="movies"
+        :see-more="true"
       />
     </div>
 
     <!-- popular series -->
     <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
       <card-render
+        label="TV Series"
         :tv-series="tvSeriesInLandingPage"
         :loading="listTvSeriesLoading"
         mode="slider"
         type="tv-series"
+        :see-more="true"
       />
     </div>
   </nuxt-layout>

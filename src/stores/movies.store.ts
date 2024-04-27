@@ -48,6 +48,34 @@ export interface MovieDetails {
   vote_count: number
 }
 
+export interface MovieCast {
+  adult: boolean
+  gender: number
+  id: number
+  known_for_department: string
+  name: string
+  original_name: string
+  popularity: string
+  profile_path: string
+  cast_id: number
+  character: string
+  credit_id: string
+  order: number
+}
+
+export interface MovieVideo {
+  iso_639_1: string
+  iso_3166_1: string
+  name: string
+  key: string
+  site: string
+  size: number
+  type: string
+  official: boolean
+  published_at: string
+  id: string
+}
+
 export interface Movie {
   adult: boolean
   backdrop_path: string
@@ -129,6 +157,33 @@ export const useMovieStore = defineStore('movie-store', {
       this.currentMovie = response
 
       return response
+    },
+    async getMovieVideos(movieId: number) {
+      this.listMovieLoading = true
+      const response = await fetchAPI(
+        `https://api.themoviedb.org/3/movie/${movieId}/videos`
+      )
+      this.listMovieLoading = false
+
+      return response
+    },
+    async getMovieCast(movieId: number) {
+      this.listMovieLoading = true
+      const response = await fetchAPI(
+        `https://api.themoviedb.org/3/movie/${movieId}/credits`
+      )
+      this.listMovieLoading = false
+
+      return response?.cast
+    },
+    async getSimilarMovies(movieId: number) {
+      this.listMovieLoading = true
+      const response = await fetchAPI(
+        `https://api.themoviedb.org/3/movie/${movieId}//similar?page=1`
+      )
+      this.listMovieLoading = false
+
+      return response?.results
     },
   },
   getters: {

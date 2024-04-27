@@ -1,15 +1,33 @@
 <script setup lang="ts">
+import type { MovieVideo, MovieCast, Movie } from 'stores/movies.store'
 import { getMovieBackdrop } from 'utils/backdrop-poster'
 
 const route = useRoute()
 const movieStore = useMovieStore()
 const { listMovieLoading, currentMovie } = storeToRefs(movieStore)
-const { getMovieById } = useMovieStore()
+const { getMovieById, getMovieVideos, getMovieCast, getSimilarMovies } =
+  useMovieStore()
 
 const movieId = route.params.movieId as unknown as number
 
+const thisMovieVideos = ref<MovieVideo[]>([])
+const thisMovieCasts = ref<MovieCast[]>([])
+const thisMovieSimilars = ref<Movie[]>([])
+
 onMounted(async () => {
   await getMovieById(movieId)
+  const response = await getMovieVideos(movieId)
+  if (response?.results) {
+    thisMovieVideos.value = response.results
+  }
+  const responseCast = await getMovieCast(movieId)
+  if (responseCast) {
+    thisMovieCasts.value = responseCast
+  }
+  const responseSimilar = await getSimilarMovies(movieId)
+  if (responseCast) {
+    thisMovieSimilars.value = responseSimilar
+  }
 })
 </script>
 
@@ -27,48 +45,70 @@ onMounted(async () => {
         class="h-full w-full"
         :style="`background-image: linear-gradient(to top right, rgba(30,30,30,0.7), rgba(30,30,30,0.2));`"
       >
-        <!-- featured banner -->
         <div
-          class="w-full lg:min-h-[60vh] md:min-h-[40vh] min-h-[20vh] flex flex-col gap-2 align-middle text-white px-6 md:px-16 lg:px-20 md:pt-40 pt-32"
+          class="flex flex-col md:flex-row gap-16 w-full lg:min-h-[60vh] md:min-h-[40vh] min-h-[20vh] px-6 md:px-16 lg:px-20 md:pt-40 pt-32"
         >
-          <div
-            class="text-3xl lg:text-5xl md:text-4xl font-bold drop-shadow-md"
-          >
-            <div v-if="!listMovieLoading">{{ currentMovie?.title }}</div>
-            <u-skeleton v-else class="h-24 opacity-50" />
-          </div>
+          <!-- featured banner -->
+          <div class="flex flex-col gap-2 align-middle text-white w-1/2">
+            <div
+              class="text-large lg:text-3xl md:text-3xl font-bold drop-shadow-md"
+            >
+              <div v-if="!listMovieLoading">{{ currentMovie?.title }}</div>
+              <u-skeleton v-else class="h-24 opacity-50" />
+            </div>
 
-          <div
-            class="text-sm lg:text-lg md:text-base w-3/4 lg:w-1/2 drop-shadow-md"
-            v-if="!listMovieLoading"
-          >
-            <div v-if="!listMovieLoading">{{ currentMovie?.overview }}</div>
-          </div>
+            <div
+              class="text-xs lg:text-sm w-3/4 drop-shadow-md"
+              v-if="!listMovieLoading"
+            >
+              <div v-if="!listMovieLoading">{{ currentMovie?.overview }}</div>
+            </div>
 
-          <!-- genres -->
-          <div
-            v-if="!listMovieLoading && !listMovieLoading"
-            class="flex flex-row gap-2 items-center"
-          >
-            <div v-for="genre in currentMovie?.genres" :key="genre.id">
-              <u-badge color="black" variant="solid">{{ genre?.name }}</u-badge>
+            <!-- genres -->
+            <div
+              v-if="!listMovieLoading && !listMovieLoading"
+              class="flex flex-row gap-2 items-center text-sm lg:text-base"
+            >
+              <div v-for="genre in currentMovie?.genres" :key="genre.id">
+                <u-badge color="black" variant="solid">{{
+                  genre?.name
+                }}</u-badge>
+              </div>
+            </div>
+
+            <!-- rating -->
+            <div
+              class="flex flex-row gap-2 items-center my-2 text-sm lg:text-base"
+              v-if="!listMovieLoading"
+            >
+              <u-button
+                class="!p-0"
+                icon="i-heroicons-star-solid"
+                variant="link"
+                color="yellow"
+              />
+              <div>{{ currentMovie?.vote_average?.toFixed(1) }} / 10</div>
             </div>
           </div>
-
-          <!-- rating -->
-          <div
-            class="flex flex-row gap-2 items-center my-2"
-            v-if="!listMovieLoading"
-          >
-            <u-button
-              class="!p-0"
-              icon="i-heroicons-star-solid"
-              variant="link"
-              color="yellow"
-            />
-            <div>{{ currentMovie?.vote_average?.toFixed(1) }} / 10</div>
+          <!-- videos -->
+          <div class="w-1/2 h-full">
+            <ClientOnly>
+              <vue-plyr>
+                <div class="plyr__video-embed h-full">
+                  <iframe
+                    :src="`https://www.youtube.com/embed/${thisMovieVideos?.[0]?.key}?amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1`"
+                    allowfullscreen
+                    allowtransparency
+                    allow="autoplay"
+                    class="h-full"
+                  >
+                  </iframe>
+                </div>
+              </vue-plyr>
+            </ClientOnly>
           </div>
         </div>
+
         <!-- transition -->
         <div
           class="h-16"
@@ -76,8 +116,26 @@ onMounted(async () => {
         />
       </div>
 
-      <!-- trailer -->
-      <div></div>
+      <!-- cast -->
+      <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
+        <card-render
+          :casts="thisMovieCasts"
+          :loading="listMovieLoading"
+          mode="slider"
+          type="casts"
+        />
+      </div>
+
+      <!-- related movies -->
+      <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
+        <card-render
+          label="Related Movies"
+          :movies="thisMovieSimilars"
+          :loading="listMovieLoading"
+          mode="slider"
+          type="movies"
+        />
+      </div>
     </div>
   </nuxt-layout>
 </template>

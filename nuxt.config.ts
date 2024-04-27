@@ -26,4 +26,5 @@ export default defineNuxtConfig({
     stores: fileURLToPath(new URL('./src/stores', import.meta.url)),
     utils: fileURLToPath(new URL('./src/utils', import.meta.url)),
   },
+  plugins: [{ src: './vue-plyr', mode: 'client' }],
 })
