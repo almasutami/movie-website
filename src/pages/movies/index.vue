@@ -9,7 +9,18 @@ const { discoverMovies, fetchAllMovieGenres } = useMovieStore()
 
 const el = ref<HTMLElement | null>(null)
 const selectedGenreId = ref<number>()
-const currentPage = ref(1)
+const currentPage = ref<number>(1)
+const isScrolled = ref<Boolean>(false)
+
+const handleScroll = () => {
+  const scrollPosition = window.scrollY
+  isScrolled.value = scrollPosition > 0
+  if (isScrolled.value === false) {
+    stopInfiniteScroll()
+  } else {
+    startInfiniteScroll()
+  }
+}
 
 const fetchMovies = async () => {
   let url = `https://api.themoviedb.org/3/discover/movie?page=${currentPage.value}&sort_by=popularity.desc`
@@ -43,13 +54,14 @@ const stopInfiniteScroll = () => {
 }
 
 onMounted(async () => {
+  window.addEventListener('scroll', handleScroll)
   fetchAllMovieGenres()
   moviesInDiscoverPage.value = []
   await fetchMovies()
-  startInfiniteScroll()
 })
 
 onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
   stopInfiniteScroll()
 })
 

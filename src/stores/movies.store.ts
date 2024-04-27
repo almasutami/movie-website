@@ -25,7 +25,7 @@ export interface MovieDetails {
   backdrop_path: string
   belongs_to_collection: null
   budget: number
-  movieGenres: Genre[]
+  genres: Genre[]
   homepage: string
   id: number
   imdb_id: number
@@ -116,6 +116,17 @@ export const useMovieStore = defineStore('movie-store', {
       this.listMovieLoading = false
       const newArray = this.moviesInDiscoverPage.concat(response?.results)
       this.moviesInDiscoverPage = newArray
+
+      return response
+    },
+    async getMovieById(movieId: number) {
+      this.listMovieLoading = true
+      const response = await fetchAPI(
+        `https://api.themoviedb.org/3/movie/${movieId}`
+      )
+      this.listMovieLoading = false
+
+      this.currentMovie = response
 
       return response
     },

@@ -9,10 +9,21 @@ const { discoverTvSeries, fetchAllTvSeriesGenres } = useTvSeriesStore()
 
 const el = ref<HTMLElement | null>(null)
 const selectedGenreId = ref<number>()
-const currentPage = ref(1)
+const currentPage = ref<number>(1)
+const isScrolled = ref<Boolean>(false)
+
+const handleScroll = () => {
+  const scrollPosition = window.scrollY
+  isScrolled.value = scrollPosition > 0
+  if (isScrolled.value === false) {
+    stopInfiniteScroll()
+  } else {
+    startInfiniteScroll()
+  }
+}
 
 const fetchTvSeries = async () => {
-  let url = `https://api.thetvSeriesdb.org/3/discover/tv?page=${currentPage.value}&sort_by=popularity.desc`
+  let url = `https://api.themoviedb.org/3/discover/tv?page=${currentPage.value}&sort_by=popularity.desc`
 
   if (selectedGenreId.value) {
     url += `&with_genres=${selectedGenreId.value}`
@@ -21,6 +32,7 @@ const fetchTvSeries = async () => {
   await discoverTvSeries(url, currentPage.value)
 }
 const startInfiniteScroll = () => {
+  if (isScrolled.value === false) return
   useInfiniteScroll(
     el,
     async () => {
@@ -32,6 +44,7 @@ const startInfiniteScroll = () => {
 }
 
 const stopInfiniteScroll = () => {
+  if (isScrolled.value === false) return
   useInfiniteScroll(
     el,
     async () => {
@@ -43,13 +56,14 @@ const stopInfiniteScroll = () => {
 }
 
 onMounted(async () => {
+  window.addEventListener('scroll', handleScroll)
   fetchAllTvSeriesGenres()
   tvSeriesInDiscoverPage.value = []
   await fetchTvSeries()
-  startInfiniteScroll()
 })
 
 onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
   stopInfiniteScroll()
 })
 
