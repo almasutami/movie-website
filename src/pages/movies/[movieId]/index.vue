@@ -81,7 +81,7 @@ onMounted(async () => {
               class="flex flex-row gap-2 items-center text-sm lg:text-base"
               v-if="!listMovieLoading"
             >
-              <div class="flex flex-row gap-2 items-center">
+              <div class="flex flex-row gap-2 items-center cursor-default">
                 <u-button
                   icon="i-heroicons-star-solid"
                   variant="solid"
@@ -90,14 +90,14 @@ onMounted(async () => {
                 />
               </div>
 
-              <div class="flex flex-row gap-2 items-center">
+              <div class="flex flex-row gap-2 items-center cursor-default">
                 <base-button
                   icon="i-heroicons-clock"
                   button-style="primary"
                   :label="`${currentMovie?.runtime}`"
                 />
               </div>
-              <div class="flex flex-row gap-2 items-center">
+              <div class="flex flex-row gap-2 items-center cursor-default">
                 <base-button
                   button-style="primary"
                   :label="`${currentMovie?.original_language?.toUpperCase()}`"

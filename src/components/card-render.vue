@@ -100,12 +100,11 @@ const isMovieCast = (obj: any): obj is Cast => {
         <div v-for="(object, index) in data" :key="index">
           <div class="hover:cursor-pointer group relative">
             <div
-              class="hover:opacity-20"
-              :class="
+              :class="`${
                 props?.mode === 'slider'
                   ? 'w-40 md:w-44 h-64'
                   : 'w-40 md:w-52 h-64 md:h-72'
-              "
+              } ${isMovieCast(object) ? 'cursor-default' : 'hover:opacity-20'}`"
               :style="`background-image: url(${isMovieCast(object) ? getMoviePoster(object?.profile_path) : getMoviePoster(object?.poster_path)}); background-size: cover; background-position: center;`"
             />
             <div
@@ -142,7 +141,10 @@ const isMovieCast = (obj: any): obj is Cast => {
                 />
               </nuxt-link>
             </div>
-            <div v-if="props?.type === 'casts'">
+            <div
+              v-if="props?.type === 'casts'"
+              class="bg-white text-gray-700 text-base flex flex-row items-center justify-center p-4 rounded-b-md"
+            >
               {{ isMovieCast(object) ? object?.name : '' }}
             </div>
           </div>
