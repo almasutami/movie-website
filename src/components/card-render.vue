@@ -52,16 +52,8 @@ const data = computed(() => {
   }
 })
 
-const isMovie = (obj: any): obj is Movie => {
-  return obj.hasOwnProperty('title') && obj.hasOwnProperty('overview')
-}
-
-const isTvSeries = (obj: any): obj is TvSeries => {
-  return obj.hasOwnProperty('title') && obj.hasOwnProperty('overview')
-}
-
 const isMovieCast = (obj: any): obj is Cast => {
-  return obj.hasOwnProperty('title') && obj.hasOwnProperty('overview')
+  return obj.hasOwnProperty('profile_path')
 }
 </script>
 
@@ -114,9 +106,8 @@ const isMovieCast = (obj: any): obj is Cast => {
                   ? 'w-40 md:w-44 h-64'
                   : 'w-40 md:w-52 h-64 md:h-72'
               "
-              :style="`background-image: url(${isMovie(object) || isTvSeries(object) ? getMoviePoster(object?.poster_path) : getMoviePoster(object?.profile_path)}); background-size: cover; background-position: center;`"
+              :style="`background-image: url(${isMovieCast(object) ? getMoviePoster(object?.profile_path) : getMoviePoster(object?.poster_path)}); background-size: cover; background-position: center;`"
             />
-            {{ object }}
             <div
               v-if="props?.type === 'movies' || props?.type === 'tv-series'"
               class="absolute inset-0 hidden group-hover:flex group-hover:flex-col group-hover:gap-4 group-hover:justify-center group-hover:items-center z-10 bg-[rgba(30,30,30,0.5)]"
@@ -130,9 +121,7 @@ const isMovieCast = (obj: any): obj is Cast => {
                 />
                 <div>
                   {{
-                    isMovie(object) || isTvSeries(object)
-                      ? object?.vote_average?.toFixed(1)
-                      : ''
+                    isMovieCast(object) ? '' : object?.vote_average?.toFixed(1)
                   }}
                   / 10
                 </div>

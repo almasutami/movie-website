@@ -137,7 +137,7 @@ onMounted(async () => {
       <!-- related tv series -->
       <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
         <card-render
-          label="Related TvSeries"
+          label="Related TV Series"
           :tv-series="thisTvSeriesSimilars"
           :loading="listTvSeriesLoading"
           mode="slider"
