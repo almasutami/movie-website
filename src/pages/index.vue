@@ -45,7 +45,7 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
             class="text-3xl lg:text-5xl md:text-4xl font-bold drop-shadow-md"
           >
             <div v-if="!listMovieLoading">{{ featuredMovie?.title }}</div>
-            <u-skeleton v-else class="h-8" />
+            <u-skeleton v-else class="h-24 opacity-50" />
           </div>
 
           <div
@@ -53,7 +53,6 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
             v-if="!listMovieLoading"
           >
             <div v-if="!listMovieLoading">{{ featuredMovie?.overview }}</div>
-            <u-skeleton v-else class="h-8" />
           </div>
 
           <!-- genres -->

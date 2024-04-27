@@ -10,19 +10,38 @@ const { discoverMovies } = useMovieStore()
 const el = ref<HTMLElement | null>(null)
 const currentPage = ref(1)
 
-useInfiniteScroll(
-  el,
-  async () => {
-    console.log('load more')
-    currentPage.value++
-    await discoverMovies('', currentPage.value)
-  },
-  { distance: 10, interval: 1000 }
-)
+const startInfiniteScroll = () => {
+  useInfiniteScroll(
+    el,
+    async () => {
+      console.log('load more')
+      currentPage.value++
+      await discoverMovies('', currentPage.value)
+    },
+    { distance: 10, interval: 1000 }
+  )
+}
+
+const stopInfiniteScroll = () => {
+  useInfiniteScroll(
+    el,
+    async () => {
+      console.log('load more')
+      currentPage.value++
+      await discoverMovies('', currentPage.value)
+    },
+    { distance: 10, interval: 1000, canLoadMore: () => false }
+  )
+}
 
 onMounted(async () => {
   moviesInDiscoverPage.value = []
   await discoverMovies('', currentPage.value)
+  startInfiniteScroll()
+})
+
+onUnmounted(() => {
+  stopInfiniteScroll()
 })
 </script>
 

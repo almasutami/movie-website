@@ -10,19 +10,38 @@ const { discoverTvSeries } = useTvSeriesStore()
 const el = ref<HTMLElement | null>(null)
 const currentPage = ref(1)
 
-useInfiniteScroll(
-  el,
-  async () => {
-    console.log('load more')
-    currentPage.value++
-    await discoverTvSeries('', currentPage.value)
-  },
-  { distance: 10, interval: 1000 }
-)
+const startInfiniteScroll = () => {
+  useInfiniteScroll(
+    el,
+    async () => {
+      console.log('load more')
+      currentPage.value++
+      await discoverTvSeries('', currentPage.value)
+    },
+    { distance: 10, interval: 1000 }
+  )
+}
+
+const stopInfiniteScroll = () => {
+  useInfiniteScroll(
+    el,
+    async () => {
+      console.log('load more')
+      currentPage.value++
+      await discoverTvSeries('', currentPage.value)
+    },
+    { distance: 10, interval: 1000, canLoadMore: () => false }
+  )
+}
 
 onMounted(async () => {
   tvSeriesInDiscoverPage.value = []
   await discoverTvSeries('', currentPage.value)
+  startInfiniteScroll()
+})
+
+onUnmounted(() => {
+  stopInfiniteScroll()
 })
 </script>
 
