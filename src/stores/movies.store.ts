@@ -100,6 +100,12 @@ interface State {
   listMovieGenreLoading: boolean
   moviesInDiscoverPage: Movie[]
   movieGenres: Genre[]
+  moviesAndTvSeriesInSearch: {
+    id: number
+    poster_path: string
+    vote_average: number
+  }[]
+  searchQuery: string
 }
 
 export const useMovieStore = defineStore('movie-store', {
@@ -110,6 +116,8 @@ export const useMovieStore = defineStore('movie-store', {
     listMovieGenreLoading: false,
     moviesInDiscoverPage: [],
     movieGenres: [],
+    moviesAndTvSeriesInSearch: [],
+    searchQuery: '',
   }),
   actions: {
     async fetchAllMovieGenres() {
@@ -184,6 +192,45 @@ export const useMovieStore = defineStore('movie-store', {
       this.listMovieLoading = false
 
       return response?.results
+    },
+    async fetchMoviesAndTvSeries(query: string) {
+      this.listMovieLoading = true
+      const fetchUrlMovies = `https://api.themoviedb.org/3/search/movie?query=${query}&page=1`
+      const responseMovies = await fetchAPI(fetchUrlMovies)
+
+      const fetchUrlTvSeries = `https://api.themoviedb.org/3/search/tv?query=${query}&page=1`
+      const responseTvSeries = await fetchAPI(fetchUrlTvSeries)
+
+      this.listMovieLoading = false
+      const newArrayMovies = this.moviesInDiscoverPage.concat(
+        responseMovies?.results
+      )
+      const newArrayTvSeries = this.moviesInDiscoverPage.concat(
+        responseTvSeries?.results
+      )
+
+      const combinedArray = [] as {
+        id: number
+        poster_path: string
+        vote_average: number
+      }[]
+      newArrayMovies.forEach((movie) => {
+        combinedArray.push({
+          id: movie.id,
+          poster_path: movie.poster_path,
+          vote_average: movie.vote_average,
+        })
+      })
+      newArrayTvSeries.forEach((movie) => {
+        combinedArray.push({
+          id: movie.id,
+          poster_path: movie.poster_path,
+          vote_average: movie.vote_average,
+        })
+      })
+      this.moviesAndTvSeriesInSearch = combinedArray
+
+      console.log(this.moviesAndTvSeriesInSearch)
     },
   },
   getters: {

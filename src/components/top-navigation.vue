@@ -77,11 +77,13 @@ const tabItems = [
 
         <div>
           <ul class="ml-4 flex space-x-4">
-            <base-button
-              size="sm"
-              button-style="link"
-              icon="i-heroicons-magnifying-glass"
-            />
+            <nuxt-link to="/search">
+              <base-button
+                size="sm"
+                button-style="link"
+                icon="i-heroicons-magnifying-glass"
+              />
+            </nuxt-link>
             <base-button button-style="secondary" size="sm" label="Login" />
           </ul>
         </div>
