@@ -1,18 +1,45 @@
 <script setup lang="ts">
-import type { TvSeries } from 'stores/tv-series.store'
+import type { TvSeries, TvSeriesEpisode } from 'stores/tv-series.store'
 import type { Cast } from 'stores/movies.store'
 import { getMovieBackdrop } from 'utils/backdrop-poster'
+import { getMoviePoster } from 'utils/backdrop-poster'
+import noImage from '@/assets/icons-and-logos/no-image.png'
 
 const route = useRoute()
 const tvSeriesStore = useTvSeriesStore()
-const { listTvSeriesLoading, currentTvSeries } = storeToRefs(tvSeriesStore)
-const { getTvSeriesById, getTvSeriesCast, getSimilarTvSeries } =
-  useTvSeriesStore()
+const { listTvSeriesLoading, currentTvSeries, fetchEpisodesLoading } =
+  storeToRefs(tvSeriesStore)
+const {
+  getTvSeriesById,
+  getTvSeriesCast,
+  getSimilarTvSeries,
+  getTvSeriesEpisodes,
+} = useTvSeriesStore()
 
 const tvSeriesId = route.params.tvSeriesId as unknown as number
 
 const thisTvSeriesCasts = ref<Cast[]>([])
 const thisTvSeriesSimilars = ref<TvSeries[]>([])
+const selectedEpisodes = ref<TvSeriesEpisode[]>([])
+const selectedSeason = ref<number>(
+  currentTvSeries?.value?.seasons?.[0]?.season_number || 0
+)
+
+const fetchEpisodes = async () => {
+  const responseEpisodes = await getTvSeriesEpisodes(
+    tvSeriesId,
+    selectedSeason.value
+  )
+  console.log(responseEpisodes)
+  if (responseEpisodes) {
+    selectedEpisodes.value = responseEpisodes
+  }
+}
+
+const onChangeSeason = (seasonId: number) => {
+  selectedSeason.value = seasonId
+  fetchEpisodes()
+}
 
 onMounted(async () => {
   await getTvSeriesById(tvSeriesId)
@@ -24,6 +51,7 @@ onMounted(async () => {
   if (responseCast) {
     thisTvSeriesSimilars.value = responseSimilar
   }
+  await fetchEpisodes()
 })
 </script>
 
@@ -42,7 +70,7 @@ onMounted(async () => {
         :style="`background-image: linear-gradient(to top right, rgba(30,30,30,0.7), rgba(30,30,30,0.2));`"
       >
         <div
-          class="flex flex-col md:flex-row gap-16 w-full lg:min-h-[60vh] md:min-h-[40vh] min-h-[20vh] px-6 md:px-16 lg:px-20 md:pt-40 pt-32"
+          class="flex flex-col md:flex-row gap-16 w-full lg:min-h-[30vh] md:min-h-[20vh] min-h-[20vh] px-6 md:px-16 lg:px-20 md:pt-40 pt-32"
         >
           <!-- featured banner -->
           <div class="flex flex-col gap-2 align-middle text-white w-1/2">
@@ -92,17 +120,17 @@ onMounted(async () => {
 
               <div class="flex flex-row gap-2 items-center">
                 <base-button
-                  icon="i-heroicons-clock"
+                  icon="i-heroicons-book-open"
                   button-style="primary"
-                  :label="`${currentTvSeries?.number_of_episodes} episodes`"
+                  :label="`${currentTvSeries?.number_of_seasons} seasons`"
                 />
               </div>
 
               <div class="flex flex-row gap-2 items-center">
                 <base-button
-                  icon="i-heroicons-clock"
+                  icon="i-heroicons-list-bullet"
                   button-style="primary"
-                  :label="`${currentTvSeries?.number_of_seasons} seasons`"
+                  :label="`${currentTvSeries?.number_of_episodes} episodes`"
                 />
               </div>
               <div class="flex flex-row gap-2 items-center">
@@ -113,8 +141,77 @@ onMounted(async () => {
               </div>
             </div>
           </div>
-          <!-- seasons and episodes -->
-          <div class="w-1/2 h-full">Seasons and episodes here</div>
+        </div>
+
+        <!-- seasons and episodes -->
+        <div
+          class="w-full lg:min-h-[30vh] min-h-[20vh] px-6 md:px-16 lg:px-20 pt-6"
+        >
+          <!-- web mode -->
+          <div
+            class="hidden md:flex flex-row text-white bg-[rgba(30,30,30,0.4)]"
+          >
+            <div class="w-1/2 max-h-[40vh] no-scrollbar overflow-scroll">
+              <div class="flex flex-col gap-2">
+                <div v-for="season in currentTvSeries?.seasons">
+                  <div
+                    class="flex flex-row gap-6 items-center pl-4 pt-4 pb-4"
+                    :class="
+                      season?.season_number === selectedSeason
+                        ? 'bg-[rgba(30,30,30,0.4)]'
+                        : ''
+                    "
+                  >
+                    <div
+                      class="w-20 h-32"
+                      :style="`background-image: url(${getMoviePoster(season?.poster_path)}); background-size: cover; background-position: center;`"
+                    />
+                    <div class="flex flex-col gap-2">
+                      <div
+                        class="hover:underline text-xl font-semibold cursor-pointer"
+                        @click="onChangeSeason(season?.season_number)"
+                      >
+                        {{ `Season ${season?.season_number}` }}
+                      </div>
+                      <div>{{ `${season?.episode_count} episodes` }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="w-1/2 bg-[rgba(30,30,30,0.4)] p-4 max-h-[40vh] overflow-scroll no-scrollbar"
+            >
+              <div v-if="fetchEpisodesLoading">
+                <u-skeleton class="h-24 w-full" />
+              </div>
+              <div
+                class="flex flex-col max-h-[50 vh] overflow-scroll no-scrollbar gap-2"
+              >
+                <div v-for="episode in selectedEpisodes">
+                  <div class="flex flex-row gap-3 items-start">
+                    <div
+                      class="w-1/2"
+                      :style="
+                        episode?.still_path
+                          ? `background-image: url(${getMoviePoster(episode?.still_path)}); background-size: cover; background-position: center;`
+                          : `background-image: url(${noImage})`
+                      "
+                    />
+                    <div class="flex flex-col gap-2">
+                      <div class="text-lg font-semibold">
+                        {{ `Episode ${episode?.episode_number}` }}
+                      </div>
+                      <div class="text-base">
+                        {{ `${episode?.name}` }}
+                      </div>
+                      <div class="text-sm">{{ `${episode?.overview}` }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- transition -->

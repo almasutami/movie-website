@@ -106,6 +106,7 @@ interface State {
   tvSeriesInLandingPage: TvSeries[]
   listTvSeriesLoading: boolean
   listTvSeriesGenreLoading: boolean
+  fetchEpisodesLoading: boolean
   tvSeriesInDiscoverPage: TvSeries[]
   tvSeriesGenres: Genre[]
 }
@@ -115,6 +116,7 @@ export const useTvSeriesStore = defineStore('tvSeries-store', {
     currentTvSeries: undefined,
     tvSeriesInLandingPage: [],
     listTvSeriesLoading: false,
+    fetchEpisodesLoading: false,
     listTvSeriesGenreLoading: false,
     tvSeriesInDiscoverPage: [],
     tvSeriesGenres: [],
@@ -183,6 +185,17 @@ export const useTvSeriesStore = defineStore('tvSeries-store', {
       this.listTvSeriesLoading = false
 
       return response?.results
+    },
+    async getTvSeriesEpisodes(movieId: number, seasonId: number) {
+      this.fetchEpisodesLoading = true
+      const response = await fetchAPI(
+        `https://api.themoviedb.org/3/tv/${movieId}/season/${seasonId}`
+      )
+      this.fetchEpisodesLoading = false
+
+      console.log(response)
+
+      return response?.episodes
     },
   },
   getters: {

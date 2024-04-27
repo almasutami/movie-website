@@ -49,7 +49,9 @@ onMounted(async () => {
           class="flex flex-col md:flex-row gap-16 w-full lg:min-h-[60vh] md:min-h-[40vh] min-h-[20vh] px-6 md:px-16 lg:px-20 md:pt-40 pt-32"
         >
           <!-- featured banner -->
-          <div class="flex flex-col gap-2 align-middle text-white w-1/2">
+          <div
+            class="flex flex-col gap-2 align-middle text-white w-full md:w-1/2"
+          >
             <div
               class="text-large lg:text-3xl md:text-3xl font-bold drop-shadow-md"
             >
