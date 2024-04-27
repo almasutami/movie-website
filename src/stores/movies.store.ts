@@ -1,21 +1,21 @@
 import { defineStore } from 'pinia'
 import { fetchAPI } from 'utils/fetch-url'
 
-interface Genre {
+export interface Genre {
   id: number
   name: string
 }
-interface ProductionCountry {
+export interface ProductionCountry {
   iso_3166_1: string
   name: string
 }
-interface ProductionCompany {
+export interface ProductionCompany {
   id: number
   logo_path: string
   name: string
   origin_country: string
 }
-interface SpokenLanguage {
+export interface SpokenLanguage {
   english_name: string
   iso_639_1: string
   name: string
@@ -48,7 +48,7 @@ export interface MovieDetails {
   vote_count: number
 }
 
-export interface MovieCast {
+export interface Cast {
   adult: boolean
   gender: number
   id: number

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MovieVideo, MovieCast, Movie } from 'stores/movies.store'
+import type { MovieVideo, Cast, Movie } from 'stores/movies.store'
 import { getMovieBackdrop } from 'utils/backdrop-poster'
 
 const route = useRoute()
@@ -11,7 +11,7 @@ const { getMovieById, getMovieVideos, getMovieCast, getSimilarMovies } =
 const movieId = route.params.movieId as unknown as number
 
 const thisMovieVideos = ref<MovieVideo[]>([])
-const thisMovieCasts = ref<MovieCast[]>([])
+const thisMovieCasts = ref<Cast[]>([])
 const thisMovieSimilars = ref<Movie[]>([])
 
 onMounted(async () => {

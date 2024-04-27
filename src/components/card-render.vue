@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Movie, MovieCast } from 'stores/movies.store'
+import type { Movie, Cast } from 'stores/movies.store'
 import type { TvSeries } from 'stores/tv-series.store'
 import { getMoviePoster } from 'utils/backdrop-poster'
 import { sentenceCase } from 'change-case'
@@ -16,7 +16,7 @@ const props = defineProps({
     default: () => [],
   },
   casts: {
-    type: Array as PropType<MovieCast[]>,
+    type: Array as PropType<Cast[]>,
     required: false,
     default: () => [],
   },
@@ -60,7 +60,7 @@ const isTvSeries = (obj: any): obj is TvSeries => {
   return obj.hasOwnProperty('title') && obj.hasOwnProperty('overview')
 }
 
-const isMovieCast = (obj: any): obj is MovieCast => {
+const isMovieCast = (obj: any): obj is Cast => {
   return obj.hasOwnProperty('title') && obj.hasOwnProperty('overview')
 }
 </script>
