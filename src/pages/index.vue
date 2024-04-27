@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { getMovieBackdrop } from 'utils/movie-backdrop'
+import { getMovieBackdrop } from 'utils/backdrop-poster'
 import CardRender from 'components/card-render.vue'
 
 const movieStore = useMovieStore()

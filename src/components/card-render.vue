@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Movie } from 'stores/movies.store'
 import type { TvSeries } from 'stores/tv-series.store'
-import { getMoviePoster } from 'utils/movie-backdrop'
+import { getMoviePoster } from 'utils/backdrop-poster'
 import { sentenceCase } from 'change-case'
 
 const props = defineProps({
@@ -61,12 +61,34 @@ const data = computed(() => {
             : 'flex gap-4 items-center flex-wrap'
         "
       >
-        <div v-for="movie of data" :key="movie.id">
-          <div
-            class="hover:cursor-pointer w-40 md:w-44 hover:scale-110"
-            :class="props?.mode === 'slider' ? 'w-40 md:w-44' : 'w-40 md:w-52'"
-          >
-            <img :src="getMoviePoster(movie?.poster_path)" />
+        <div v-for="movie_or_series of data" :key="movie_or_series.id">
+          <div class="hover:cursor-pointer group relative">
+            <div
+              class="w-40 md:w-44 hover:opacity-20"
+              :class="
+                props?.mode === 'slider' ? 'w-40 md:w-44' : 'w-40 md:w-52'
+              "
+            >
+              <img :src="getMoviePoster(movie_or_series?.poster_path)" />
+            </div>
+            <div
+              class="absolute inset-0 hidden group-hover:flex group-hover:flex-col group-hover:gap-4 group-hover:justify-center group-hover:items-center z-10 bg-[rgba(30,30,30,0.5)]"
+            >
+              <div class="flex flex-row gap-2 items-center my-2">
+                <u-button
+                  class="!p-0"
+                  icon="i-heroicons-star-solid"
+                  variant="link"
+                  color="yellow"
+                />
+                <div>{{ movie_or_series?.vote_average?.toFixed(1) }} / 10</div>
+              </div>
+              <base-button
+                icon="i-heroicons-information-circle"
+                button-style="primary"
+                label="See details"
+              />
+            </div>
           </div>
         </div>
       </div>

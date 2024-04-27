@@ -74,8 +74,6 @@ interface State {
   genres: Genre[]
 }
 
-export const activeStatusKey = 'active-status'
-
 export const useMovieStore = defineStore('movie-store', {
   state: (): State => ({
     moviesInLandingPage: [],

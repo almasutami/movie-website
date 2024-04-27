@@ -22,8 +22,6 @@ interface State {
   listTvSeriesLoading: boolean
 }
 
-export const activeStatusKey = 'active-status'
-
 export const useTvSeriesStore = defineStore('tvSeries-store', {
   state: (): State => ({
     tvSeriesInLandingPage: [],
