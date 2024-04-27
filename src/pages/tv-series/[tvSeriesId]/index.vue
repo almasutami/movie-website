@@ -71,7 +71,7 @@ onMounted(async () => {
         :style="`background-image: linear-gradient(to top right, rgba(30,30,30,0.7), rgba(30,30,30,0.2));`"
       >
         <div
-          class="flex flex-col md:flex-row gap-16 w-full lg:min-h-[30vh] md:min-h-[20vh] min-h-[20vh] px-6 md:px-16 lg:px-20 md:pt-40 pt-32"
+          class="flex flex-col md:flex-row gap-16 w-full lg:min-h-[30vh] md:min-h-[20vh] min-h-[20vh] px-6 md:px-16 lg:px-20 md:pt-32 pt-28"
         >
           <!-- featured banner -->
           <div
