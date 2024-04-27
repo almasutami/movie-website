@@ -37,6 +37,7 @@ const fetchEpisodes = async () => {
 }
 
 const onChangeSeason = (seasonId: number) => {
+  selectedEpisodes.value = []
   selectedSeason.value = seasonId
   fetchEpisodes()
 }
@@ -151,8 +152,11 @@ onMounted(async () => {
           <div
             class="hidden md:flex flex-row text-white bg-[rgba(30,30,30,0.4)]"
           >
-            <div class="w-1/2 max-h-[40vh] no-scrollbar overflow-scroll">
-              <div class="flex flex-col gap-2">
+            <div class="w-1/3 max-h-[40vh] no-scrollbar overflow-scroll">
+              <div v-if="listTvSeriesLoading">
+                <u-skeleton class="h-24 w-full opacity-20" />
+              </div>
+              <div v-else class="flex flex-col gap-2">
                 <div v-for="season in currentTvSeries?.seasons">
                   <div
                     class="flex flex-row gap-6 items-center pl-4 pt-4 pb-4"
@@ -180,25 +184,25 @@ onMounted(async () => {
               </div>
             </div>
             <div
-              class="w-1/2 bg-[rgba(30,30,30,0.4)] p-4 max-h-[40vh] overflow-scroll no-scrollbar"
+              class="w-2/3 bg-[rgba(30,30,30,0.4)] p-4 max-h-[40vh] overflow-scroll no-scrollbar"
             >
               <div v-if="fetchEpisodesLoading">
-                <u-skeleton class="h-24 w-full" />
+                <u-skeleton class="h-24 w-full opacity-20" />
               </div>
               <div
                 class="flex flex-col max-h-[50 vh] overflow-scroll no-scrollbar gap-2"
               >
                 <div v-for="episode in selectedEpisodes">
-                  <div class="flex flex-row gap-3 items-start">
+                  <div class="flex gap-3 items-start">
                     <div
-                      class="w-1/2"
+                      class="w-64 h-40 flex-none"
                       :style="
                         episode?.still_path
                           ? `background-image: url(${getMoviePoster(episode?.still_path)}); background-size: cover; background-position: center;`
                           : `background-image: url(${noImage})`
                       "
                     />
-                    <div class="flex flex-col gap-2">
+                    <div class="flex flex-col gap-2 grow">
                       <div class="text-lg font-semibold">
                         {{ `Episode ${episode?.episode_number}` }}
                       </div>
