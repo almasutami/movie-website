@@ -78,13 +78,14 @@ const data = computed(() => {
         <div v-for="(movieOrTvSeries, index) in data" :key="index">
           <div class="hover:cursor-pointer group relative">
             <div
-              class="w-40 md:w-44 hover:opacity-20"
+              class="hover:opacity-20"
               :class="
-                props?.mode === 'slider' ? 'w-40 md:w-44' : 'w-40 md:w-52'
+                props?.mode === 'slider'
+                  ? 'w-40 md:w-44 h-64'
+                  : 'w-40 md:w-52 h-64 md:h-72'
               "
-            >
-              <img :src="getMoviePoster(movieOrTvSeries?.poster_path)" />
-            </div>
+              :style="`background-image: url(${getMoviePoster(movieOrTvSeries?.poster_path)}); background-size: cover; background-position: center;`"
+            />
             <div
               class="absolute inset-0 hidden group-hover:flex group-hover:flex-col group-hover:gap-4 group-hover:justify-center group-hover:items-center z-10 bg-[rgba(30,30,30,0.5)]"
             >
@@ -126,15 +127,14 @@ const data = computed(() => {
         "
       >
         <div v-for="index in 10" :key="index">
-          <div class="hover:cursor-pointer group relative">
-            <div
-              class="w-40 md:w-44 hover:opacity-20"
-              :class="
-                props?.mode === 'slider' ? 'w-40 md:w-44' : 'w-40 md:w-52'
-              "
-            >
-              <u-skeleton />
-            </div>
+          <div
+            :class="
+              props?.mode === 'slider'
+                ? 'w-40 md:w-44 h-64'
+                : 'w-40 md:w-52 h-64 md:h-72'
+            "
+          >
+            <u-skeleton class="h-full w-full" />
           </div>
         </div>
       </div>
