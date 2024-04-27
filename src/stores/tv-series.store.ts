@@ -20,12 +20,14 @@ export interface TvSeries {
 interface State {
   tvSeriesInLandingPage: TvSeries[]
   listTvSeriesLoading: boolean
+  tvSeriesInDiscoverPage: TvSeries[]
 }
 
 export const useTvSeriesStore = defineStore('tvSeries-store', {
   state: (): State => ({
     tvSeriesInLandingPage: [],
     listTvSeriesLoading: false,
+    tvSeriesInDiscoverPage: [],
   }),
   actions: {
     async listPopularTvSeriesForLandingPage() {
@@ -36,6 +38,19 @@ export const useTvSeriesStore = defineStore('tvSeries-store', {
       this.listTvSeriesLoading = false
 
       this.tvSeriesInLandingPage = response?.results
+
+      return response
+    },
+    async discoverTvSeries(url: string, page: number = 1) {
+      this.listTvSeriesLoading = true
+      const fetchUrl =
+        url ||
+        `https://api.themoviedb.org/3/discover/movie?page=${page}&sort_by=popularity.desc`
+      const response = await fetchAPI(fetchUrl)
+
+      this.listTvSeriesLoading = false
+      const newArray = this.tvSeriesInDiscoverPage.concat(response?.results)
+      this.tvSeriesInDiscoverPage = newArray
 
       return response
     },
