@@ -12,7 +12,7 @@ const movieId = route.params.movieId as unknown as number
 
 const thisMovieVideos = ref<MovieVideo[]>([])
 const thisMovieCasts = ref<Cast[]>([])
-const thisMovieSimilars = ref<Movie[]>([])
+const thisMovieSimilar = ref<Movie[]>([])
 
 onMounted(async () => {
   await getMovieById(movieId)
@@ -26,7 +26,7 @@ onMounted(async () => {
   }
   const responseSimilar = await getSimilarMovies(movieId)
   if (responseCast) {
-    thisMovieSimilars.value = responseSimilar
+    thisMovieSimilar.value = responseSimilar
   }
 })
 </script>
@@ -155,7 +155,7 @@ onMounted(async () => {
       <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
         <card-render
           label="Related Movies"
-          :movies="thisMovieSimilars"
+          :movies="thisMovieSimilar"
           :loading="listMovieLoading"
           mode="slider"
           type="movies"

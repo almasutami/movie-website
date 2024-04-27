@@ -13,6 +13,11 @@ export const ignoreWords = [
   'Abez',
   'rtgp',
   'pinia',
+  'plyr',
+  'Plyr',
+  'vueuse',
+  'testid',
+  'allowtransparency',
 ]
 export const version = '0.2'
 export const language = 'en'
@@ -24,4 +29,6 @@ export const ignorePaths = [
   './yarn-error.log',
   './cspell.config.js',
   './package.json',
+  './playwright-report/index.html',
+  './playwright.config.ts',
 ]

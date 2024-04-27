@@ -18,7 +18,7 @@ const {
 const tvSeriesId = route.params.tvSeriesId as unknown as number
 
 const thisTvSeriesCasts = ref<Cast[]>([])
-const thisTvSeriesSimilars = ref<TvSeries[]>([])
+const thisTvSeriesSimilar = ref<TvSeries[]>([])
 const selectedEpisodes = ref<TvSeriesEpisode[]>([])
 const selectedSeason = ref<number>(
   currentTvSeries?.value?.seasons?.[0]?.season_number || 0
@@ -49,7 +49,7 @@ onMounted(async () => {
   }
   const responseSimilar = await getSimilarTvSeries(tvSeriesId)
   if (responseCast) {
-    thisTvSeriesSimilars.value = responseSimilar
+    thisTvSeriesSimilar.value = responseSimilar
   }
   await fetchEpisodes()
 })
@@ -246,7 +246,7 @@ onMounted(async () => {
       <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
         <card-render
           label="Related TV Series"
-          :tv-series="thisTvSeriesSimilars"
+          :tv-series="thisTvSeriesSimilar"
           :loading="listTvSeriesLoading"
           mode="slider"
           type="tv-series"
