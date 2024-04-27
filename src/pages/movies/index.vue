@@ -108,6 +108,7 @@ watch(
         <div class="flex space-x-6 text-gray-300 overflow-scroll no-scrollbar">
           <base-button
             v-for="movieGenre in movieGenres"
+            :data-testid="`genre-${movieGenre.id}`"
             :key="movieGenre.id"
             class="hover:cursor-pointer"
             @click="selectedGenreId = movieGenre.id"

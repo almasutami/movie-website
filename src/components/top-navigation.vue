@@ -70,6 +70,7 @@ const tabItems = [
               v-for="tab in tabItems"
               :key="tab.label"
               :to="tab.to"
+              :data-test-id="`tab-${tab.label}`"
               class="hover:cursor-pointer"
               exact-active-class=" text-base font-semibold text-white"
             >

@@ -11,7 +11,7 @@
     "spell-check": "cspell .",
     "lint": "eslint \"src/**/*.{js,ts,json,vue}\"",
     "lint:fix": "eslint \"src/**/*.{js,ts,json,vue}\" --fix",
-    "e2e": "npx playwright test"
+    "e2e": "npx playwright test --project chromium"
   },
   "dependencies": {
     "@nuxt/ui": "^2.15.2",

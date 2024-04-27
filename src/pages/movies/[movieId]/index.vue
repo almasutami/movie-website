@@ -53,6 +53,7 @@ onMounted(async () => {
             class="flex flex-col gap-2 align-middle text-white w-full md:w-1/2"
           >
             <div
+              data-testid="movie-title"
               class="text-xl lg:text-3xl md:text-3xl font-bold drop-shadow-md"
             >
               <div v-if="!listMovieLoading">{{ currentMovie?.title }}</div>
@@ -60,6 +61,7 @@ onMounted(async () => {
             </div>
 
             <div
+              data-testid="movie-overview"
               class="text-xs lg:text-sm w-3/4 drop-shadow-md"
               v-if="!listMovieLoading"
             >
@@ -68,6 +70,7 @@ onMounted(async () => {
 
             <!-- genres -->
             <div
+              data-testid="movie-genre"
               v-if="!listMovieLoading && !listMovieLoading"
               class="flex flex-row gap-2 items-center text-sm lg:text-base"
             >
@@ -85,6 +88,7 @@ onMounted(async () => {
             >
               <div class="flex flex-row gap-2 items-center cursor-default">
                 <u-button
+                  data-testid="movie-rating"
                   icon="i-heroicons-star-solid"
                   variant="solid"
                   color="yellow"
@@ -94,6 +98,7 @@ onMounted(async () => {
 
               <div class="flex flex-row gap-2 items-center cursor-default">
                 <base-button
+                  data-testid="movie-runtime"
                   icon="i-heroicons-clock"
                   button-style="primary"
                   :label="`${currentMovie?.runtime} mins`"
@@ -101,6 +106,7 @@ onMounted(async () => {
               </div>
               <div class="flex flex-row gap-2 items-center cursor-default">
                 <base-button
+                  data-testid="movie-language"
                   button-style="primary"
                   :label="`${currentMovie?.original_language?.toUpperCase()}`"
                 />
@@ -133,7 +139,10 @@ onMounted(async () => {
       </div>
 
       <!-- cast -->
-      <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
+      <div
+        data-testid="movie-cast"
+        class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5"
+      >
         <card-render
           :casts="thisMovieCasts"
           :loading="listMovieLoading"
