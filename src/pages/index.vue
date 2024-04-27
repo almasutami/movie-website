@@ -47,25 +47,25 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
           <div
             class="text-3xl lg:text-5xl md:text-4xl font-bold drop-shadow-md"
           >
-            <div data-testid="featured-title" v-if="!listMovieLoading">
+            <div v-if="!listMovieLoading" data-testid="featured-title">
               {{ featuredMovie?.title }}
             </div>
             <u-skeleton v-else class="h-24 opacity-50" />
           </div>
 
           <div
-            data-testid="featured-overview"
-            class="text-sm lg:text-lg md:text-base w-3/4 lg:w-1/2 drop-shadow-md"
             v-if="!listMovieLoading"
+            class="text-sm lg:text-lg md:text-base w-3/4 lg:w-1/2 drop-shadow-md"
+            data-testid="featured-overview"
           >
             <div v-if="!listMovieLoading">{{ featuredMovie?.overview }}</div>
           </div>
 
           <!-- genres -->
           <div
-            data-testid="featured-genre"
             v-if="!listMovieGenreLoading && !listMovieLoading"
             class="flex flex-row gap-2 items-center"
+            data-testid="featured-genre"
           >
             <div
               v-for="genreId in featuredMovie?.genre_ids?.slice(0, 3)"
@@ -82,8 +82,8 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
 
           <!-- rating -->
           <div
-            class="flex flex-row gap-2 items-center my-2"
             v-if="!listMovieLoading"
+            class="flex flex-row gap-2 items-center my-2"
           >
             <!-- details button -->
             <nuxt-link :to="`/movies/${featuredMovie?.id}`">

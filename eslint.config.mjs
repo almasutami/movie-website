@@ -5,5 +5,8 @@ export default withNuxt({
     'vue/multi-word-component-names': 'off',
     'no-undef': 'off',
     'vue/html-self-closing': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    'no-prototype-builtins': 'off',
+    'vue/return-in-computed-property': 'off',
   },
 })

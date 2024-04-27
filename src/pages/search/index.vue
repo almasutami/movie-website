@@ -43,12 +43,12 @@ watch(
                 variant="none"
                 class="w-full"
                 :model-value="searchQuery"
+                placeholder="Enter title..."
                 @change="
                   (value: string) => {
                     searchQuery = value
                   }
                 "
-                placeholder="Enter title..."
               ></u-input>
             </div>
           </div>

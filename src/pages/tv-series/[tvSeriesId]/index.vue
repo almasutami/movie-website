@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { TvSeries, TvSeriesEpisode } from 'stores/tv-series.store'
 import type { Cast } from 'stores/movies.store'
-import { getMovieBackdrop } from 'utils/backdrop-poster'
-import { getMoviePoster } from 'utils/backdrop-poster'
+import { getMovieBackdrop, getMoviePoster } from 'utils/backdrop-poster'
 import noImage from '@/assets/icons-and-logos/no-image.png'
 
 const route = useRoute()
@@ -87,8 +86,8 @@ onMounted(async () => {
             </div>
 
             <div
-              class="text-xs lg:text-sm w-3/4 drop-shadow-md"
               v-if="!listTvSeriesLoading"
+              class="text-xs lg:text-sm w-3/4 drop-shadow-md"
             >
               <div v-if="!listTvSeriesLoading">
                 {{ currentTvSeries?.overview }}
@@ -109,8 +108,8 @@ onMounted(async () => {
 
             <!-- rating , runtime, language -->
             <div
-              class="flex flex-row gap-2 flex-wrap items-center text-sm lg:text-base"
               v-if="!listTvSeriesLoading"
+              class="flex flex-row gap-2 flex-wrap items-center text-sm lg:text-base"
             >
               <div class="flex flex-row gap-2 items-center">
                 <u-button
@@ -159,7 +158,10 @@ onMounted(async () => {
                 <u-skeleton class="h-24 w-full opacity-20" />
               </div>
               <div v-else class="flex flex-col gap-2">
-                <div v-for="season in currentTvSeries?.seasons">
+                <div
+                  v-for="season in currentTvSeries?.seasons"
+                  :key="season?.season_number"
+                >
                   <div
                     class="flex flex-row gap-6 items-center pl-4 pt-4 pb-4"
                     :class="
@@ -194,7 +196,10 @@ onMounted(async () => {
               <div
                 class="flex flex-col max-h-[50 vh] overflow-scroll no-scrollbar gap-2"
               >
-                <div v-for="episode in selectedEpisodes">
+                <div
+                  v-for="episode in selectedEpisodes"
+                  :key="episode?.episode_number"
+                >
                   <div class="flex gap-3 items-start">
                     <div
                       class="w-64 h-40 flex-none"

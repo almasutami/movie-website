@@ -104,6 +104,7 @@ const tabItems = [
               variant="none"
               class="w-full hidden md:block"
               :model-value="searchQuery"
+              placeholder="Search by title..."
               @change="
                 (value: string) => {
                   searchQuery = value
@@ -112,7 +113,6 @@ const tabItems = [
                   }
                 }
               "
-              placeholder="Search by title..."
             ></u-input>
           </ul>
         </div>

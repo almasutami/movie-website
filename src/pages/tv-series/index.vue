@@ -10,7 +10,7 @@ const { discoverTvSeries, fetchAllTvSeriesGenres } = useTvSeriesStore()
 const el = ref<HTMLElement | null>(null)
 const selectedGenreId = ref<number>()
 const currentPage = ref<number>(1)
-const isScrolled = ref<Boolean>(false)
+const isScrolled = ref<boolean>(false)
 
 const handleScroll = () => {
   const scrollPosition = window.scrollY
@@ -82,8 +82,8 @@ watch(
 <template>
   <nuxt-layout name="default-page-layout">
     <div
-      class="bg-[rgba(30,30,30,1)] h-full min-h-screen pb-5 md:pt-24 pt-18 text-white"
       ref="el"
+      class="bg-[rgba(30,30,30,1)] h-full min-h-screen pb-5 md:pt-24 pt-18 text-white"
     >
       <!-- all genres -->
       <div class="lg:px-16 md:px-8 px-4 text-white py-2">
@@ -112,18 +112,18 @@ watch(
             v-for="tvSeriesGenre in tvSeriesGenres"
             :key="tvSeriesGenre.id"
             class="hover:cursor-pointer"
-            @click="selectedGenreId = tvSeriesGenre.id"
             :button-style="
               selectedGenreId === tvSeriesGenre.id ? 'primary' : 'secondary'
             "
             :label="tvSeriesGenre.name"
+            @click="selectedGenreId = tvSeriesGenre.id"
           />
         </div>
       </div>
       <!-- list all tv series -->
       <card-render
         mode="full-page"
-        :tvSeries="tvSeriesInDiscoverPage"
+        :tv-series="tvSeriesInDiscoverPage"
         type="tv-series"
       />
     </div>

@@ -61,17 +61,17 @@ onMounted(async () => {
             </div>
 
             <div
+              v-if="!listMovieLoading"
               data-testid="movie-overview"
               class="text-xs lg:text-sm w-3/4 drop-shadow-md"
-              v-if="!listMovieLoading"
             >
               <div v-if="!listMovieLoading">{{ currentMovie?.overview }}</div>
             </div>
 
             <!-- genres -->
             <div
-              data-testid="movie-genre"
               v-if="!listMovieLoading && !listMovieLoading"
+              data-testid="movie-genre"
               class="flex flex-row gap-2 items-center text-sm lg:text-base"
             >
               <div v-for="genre in currentMovie?.genres" :key="genre.id">
@@ -83,8 +83,8 @@ onMounted(async () => {
 
             <!-- rating , runtime, language -->
             <div
-              class="flex flex-row gap-2 items-center text-sm lg:text-base"
               v-if="!listMovieLoading"
+              class="flex flex-row gap-2 items-center text-sm lg:text-base"
             >
               <div class="flex flex-row gap-2 items-center cursor-default">
                 <u-button
