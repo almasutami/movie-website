@@ -96,7 +96,7 @@ onMounted(async () => {
                 <base-button
                   icon="i-heroicons-clock"
                   button-style="primary"
-                  :label="`${currentMovie?.runtime}`"
+                  :label="`${currentMovie?.runtime} mins`"
                 />
               </div>
               <div class="flex flex-row gap-2 items-center cursor-default">
@@ -111,13 +111,12 @@ onMounted(async () => {
           <div class="w-1/2 h-full">
             <ClientOnly>
               <vue-plyr>
-                <div class="plyr__video-embed h-full">
+                <div class="plyr__video-embed h-full w-full">
                   <iframe
                     :src="`https://www.youtube.com/embed/${thisMovieVideos?.[0]?.key}?amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1`"
                     allowfullscreen
                     allowtransparency
                     allow="autoplay"
-                    class="h-full"
                   >
                   </iframe>
                 </div>
