@@ -34,11 +34,11 @@ const tabItems = [
     to: '/movies',
     icon: 'i-heroicons-film',
   },
-  // {
-  //   label: 'TV Series',
-  //   to: '/tv-series',
-  //   icon: 'i-heroicons-tv',
-  // },
+  {
+    label: 'TV Series',
+    to: '/tv-series',
+    icon: 'i-heroicons-tv',
+  },
 ] as TabItem[]
 </script>
 
@@ -60,7 +60,7 @@ const tabItems = [
           <div class="hidden md:block">
             <div class="ml-4 flex space-x-6 text-gray-300">
               <nuxt-link
-                v-for="tab of tabItems"
+                v-for="tab in tabItems"
                 :key="tab.label"
                 :to="tab.to"
                 class="hover:cursor-pointer"

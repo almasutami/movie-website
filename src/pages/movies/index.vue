@@ -1,13 +1,28 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import CardRender from 'components/card-render.vue'
+import { useInfiniteScroll } from '@vueuse/core'
 
 const movieStore = useMovieStore()
 const { moviesInDiscoverPage } = storeToRefs(movieStore)
 const { discoverMovies } = useMovieStore()
 
-onMounted(() => {
-  discoverMovies('')
+const el = ref<HTMLElement | null>(null)
+const currentPage = ref(1)
+
+useInfiniteScroll(
+  el,
+  async () => {
+    console.log('load more')
+    currentPage.value++
+    await discoverMovies('', currentPage.value)
+  },
+  { distance: 10, interval: 1000 }
+)
+
+onMounted(async () => {
+  moviesInDiscoverPage.value = []
+  await discoverMovies('', currentPage.value)
 })
 </script>
 
@@ -15,7 +30,8 @@ onMounted(() => {
   <nuxt-layout name="default-page-layout">
     <!-- list all movies -->
     <div
-      class="bg-[rgba(30,30,30,1)] min-h-screen pb-5 md:pt-40 pt-32 text-white"
+      class="bg-[rgba(30,30,30,1)] h-full min-h-screen pb-5 md:pt-28 pt-24 text-white"
+      ref="el"
     >
       <card-render
         mode="full-page"

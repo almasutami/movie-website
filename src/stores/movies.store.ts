@@ -106,15 +106,16 @@ export const useMovieStore = defineStore('movie-store', {
 
       return response
     },
-    async discoverMovies(url: string) {
+    async discoverMovies(url: string, page: number = 1) {
       this.listMovieLoading = true
       const fetchUrl =
         url ||
-        'https://api.themoviedb.org/3/discover/movie?page=1&sort_by=popularity.desc'
+        `https://api.themoviedb.org/3/discover/movie?page=${page}&sort_by=popularity.desc`
       const response = await fetchAPI(fetchUrl)
-      this.listMovieLoading = false
 
-      this.moviesInDiscoverPage = response?.results
+      this.listMovieLoading = false
+      const newArray = this.moviesInDiscoverPage.concat(response?.results)
+      this.moviesInDiscoverPage = newArray
 
       return response
     },

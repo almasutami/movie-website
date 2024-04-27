@@ -4,11 +4,13 @@ import { getMovieBackdrop } from 'utils/backdrop-poster'
 import CardRender from 'components/card-render.vue'
 
 const movieStore = useMovieStore()
-const { moviesInLandingPage, listMovieGenreLoading } = storeToRefs(movieStore)
+const { moviesInLandingPage, listMovieGenreLoading, listMovieLoading } =
+  storeToRefs(movieStore)
 const { listPopularMoviesForLandingPage, getGenreName, fetchAllMovieGenres } =
   useMovieStore()
 const tvSeriesStore = useTvSeriesStore()
-const { tvSeriesInLandingPage } = storeToRefs(tvSeriesStore)
+const { tvSeriesInLandingPage, listTvSeriesLoading } =
+  storeToRefs(tvSeriesStore)
 const { listPopularTvSeriesForLandingPage } = useTvSeriesStore()
 
 onMounted(async () => {
@@ -25,7 +27,11 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
   <nuxt-layout name="default-page-layout">
     <div
       class="h-full bg-no-repeat bg-cover bg-fixed bg-top"
-      :style="`background-image: linear-gradient(to bottom, rgba(30,30,30,1), rgba(30,30,30,0), rgba(30,30,30,1)), url(${getMovieBackdrop(featuredMovie?.backdrop_path)});`"
+      :style="
+        !listMovieLoading
+          ? `background-image: linear-gradient(to bottom, rgba(30,30,30,1), rgba(30,30,30,0), rgba(30,30,30,1)), url(${getMovieBackdrop(featuredMovie?.backdrop_path)});`
+          : 'bg-[rgba(30,30,30,1)]'
+      "
     >
       <div
         class="h-full w-full"
@@ -38,20 +44,25 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
           <div
             class="text-3xl lg:text-5xl md:text-4xl font-bold drop-shadow-md"
           >
-            {{ featuredMovie?.title }}
+            <div v-if="!listMovieLoading">{{ featuredMovie?.title }}</div>
+            <u-skeleton v-else class="h-8" />
           </div>
+
           <div
             class="text-sm lg:text-lg md:text-base w-3/4 lg:w-1/2 drop-shadow-md"
+            v-if="!listMovieLoading"
           >
-            {{ featuredMovie?.overview }}
+            <div v-if="!listMovieLoading">{{ featuredMovie?.overview }}</div>
+            <u-skeleton v-else class="h-8" />
           </div>
+
           <!-- genres -->
           <div
-            v-if="!listMovieGenreLoading"
+            v-if="!listMovieGenreLoading && !listMovieLoading"
             class="flex flex-row gap-2 items-center"
           >
             <div
-              v-for="genreId of featuredMovie?.genre_ids?.slice(0, 3)"
+              v-for="genreId in featuredMovie?.genre_ids?.slice(0, 3)"
               :key="genreId"
             >
               <u-badge color="black" variant="solid">{{
@@ -62,18 +73,20 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
               <u-badge color="black" variant="solid">more +</u-badge>
             </div>
           </div>
-          <div v-else>
-            <u-skeleton class="w-20 h-6" />
-          </div>
 
           <!-- rating -->
-          <div class="flex flex-row gap-2 items-center my-2">
+          <div
+            class="flex flex-row gap-2 items-center my-2"
+            v-if="!listMovieLoading"
+          >
             <!-- details button -->
-            <base-button
-              icon="i-heroicons-information-circle"
-              button-style="primary"
-              label="See details"
-            />
+            <nuxt-link :to="`/movies/${featuredMovie?.id}`">
+              <base-button
+                icon="i-heroicons-information-circle"
+                button-style="primary"
+                label="See details"
+              />
+            </nuxt-link>
             <u-button
               class="!p-0"
               icon="i-heroicons-star-solid"
@@ -93,13 +106,19 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
 
     <!-- popular movies -->
     <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
-      <card-render :movies="popularMovies" mode="slider" type="movies" />
+      <card-render
+        :movies="popularMovies"
+        :loading="listMovieLoading"
+        mode="slider"
+        type="movies"
+      />
     </div>
 
     <!-- popular series -->
     <div class="bg-[rgba(30,30,30,1)] min-h-[40vh] pb-5">
       <card-render
         :tv-series="tvSeriesInLandingPage"
+        :loading="listTvSeriesLoading"
         mode="slider"
         type="tv-series"
       />

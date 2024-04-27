@@ -23,6 +23,10 @@ const props = defineProps({
     type: String as PropType<'slider' | 'full-page'>,
     required: true,
   },
+  loading: {
+    type: Boolean,
+    required: false,
+  },
 })
 
 const data = computed(() => {
@@ -41,13 +45,22 @@ const data = computed(() => {
         {{ sentenceCase(props?.type) }}
       </div>
       <div>
-        <base-button
-          v-if="props?.mode === 'slider'"
-          button-style="link"
-          icon="i-heroicons-chevron-right-20-solid"
-          :label="'See more'"
-          trailing
-        />
+        <nuxt-link
+          :to="
+            props?.type === 'movies'
+              ? '/movies'
+              : props?.type === 'tv-series'
+                ? '/tv-series'
+                : '/'
+          "
+        >
+          <base-button
+            v-if="props?.mode === 'slider'"
+            button-style="link"
+            icon="i-heroicons-chevron-right-20-solid"
+            :label="'See more'"
+            trailing
+        /></nuxt-link>
       </div>
     </div>
     <div
@@ -55,13 +68,14 @@ const data = computed(() => {
       :class="props?.mode === 'slider' ? 'overflow-scroll' : ''"
     >
       <div
+        v-if="!props?.loading"
         :class="
           props?.mode === 'slider'
             ? 'flex gap-4 items-center'
             : 'flex gap-4 items-center flex-wrap'
         "
       >
-        <div v-for="movie_or_series of data" :key="movie_or_series.id">
+        <div v-for="(movieOrTvSeries, index) in data" :key="index">
           <div class="hover:cursor-pointer group relative">
             <div
               class="w-40 md:w-44 hover:opacity-20"
@@ -69,7 +83,7 @@ const data = computed(() => {
                 props?.mode === 'slider' ? 'w-40 md:w-44' : 'w-40 md:w-52'
               "
             >
-              <img :src="getMoviePoster(movie_or_series?.poster_path)" />
+              <img :src="getMoviePoster(movieOrTvSeries?.poster_path)" />
             </div>
             <div
               class="absolute inset-0 hidden group-hover:flex group-hover:flex-col group-hover:gap-4 group-hover:justify-center group-hover:items-center z-10 bg-[rgba(30,30,30,0.5)]"
@@ -81,13 +95,45 @@ const data = computed(() => {
                   variant="link"
                   color="yellow"
                 />
-                <div>{{ movie_or_series?.vote_average?.toFixed(1) }} / 10</div>
+                <div>{{ movieOrTvSeries?.vote_average?.toFixed(1) }} / 10</div>
               </div>
-              <base-button
-                icon="i-heroicons-information-circle"
-                button-style="primary"
-                label="See details"
-              />
+              <nuxt-link
+                :to="
+                  props?.type === 'movies'
+                    ? `/movies/${movieOrTvSeries?.id}`
+                    : props?.type === 'tv-series'
+                      ? `/tv-series/${movieOrTvSeries?.id}`
+                      : '/'
+                "
+              >
+                <base-button
+                  icon="i-heroicons-information-circle"
+                  button-style="primary"
+                  label="See details"
+                />
+              </nuxt-link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-if="props?.loading"
+        :class="
+          props?.mode === 'slider'
+            ? 'flex gap-4 items-center'
+            : 'flex gap-4 items-center flex-wrap'
+        "
+      >
+        <div v-for="index in 10" :key="index">
+          <div class="hover:cursor-pointer group relative">
+            <div
+              class="w-40 md:w-44 hover:opacity-20"
+              :class="
+                props?.mode === 'slider' ? 'w-40 md:w-44' : 'w-40 md:w-52'
+              "
+            >
+              <u-skeleton />
             </div>
           </div>
         </div>
