@@ -30,7 +30,7 @@ const fetchEpisodes = async () => {
     tvSeriesId,
     selectedSeason.value
   )
-  console.log(responseEpisodes)
+
   if (responseEpisodes) {
     selectedEpisodes.value = responseEpisodes
   }
@@ -74,7 +74,9 @@ onMounted(async () => {
           class="flex flex-col md:flex-row gap-16 w-full lg:min-h-[30vh] md:min-h-[20vh] min-h-[20vh] px-6 md:px-16 lg:px-20 md:pt-40 pt-32"
         >
           <!-- featured banner -->
-          <div class="flex flex-col gap-2 align-middle text-white w-1/2">
+          <div
+            class="flex flex-col gap-2 align-middle text-white w-full md:w-1/2"
+          >
             <div
               class="text-large lg:text-3xl md:text-3xl font-bold drop-shadow-md"
             >
@@ -107,7 +109,7 @@ onMounted(async () => {
 
             <!-- rating , runtime, language -->
             <div
-              class="flex flex-row gap-2 items-center text-sm lg:text-base"
+              class="flex flex-row gap-2 flex-wrap items-center text-sm lg:text-base"
               v-if="!listTvSeriesLoading"
             >
               <div class="flex flex-row gap-2 items-center">
@@ -146,13 +148,13 @@ onMounted(async () => {
 
         <!-- seasons and episodes -->
         <div
-          class="w-full lg:min-h-[30vh] min-h-[20vh] px-6 md:px-16 lg:px-20 pt-6"
+          class="w-full lg:min-h-[50vh] min-h-[30vh] px-6 md:px-16 lg:px-20 pt-6"
         >
           <!-- web mode -->
           <div
             class="hidden md:flex flex-row text-white bg-[rgba(30,30,30,0.4)]"
           >
-            <div class="w-1/3 max-h-[40vh] no-scrollbar overflow-scroll">
+            <div class="w-1/3 max-h-[50vh] no-scrollbar overflow-scroll">
               <div v-if="listTvSeriesLoading">
                 <u-skeleton class="h-24 w-full opacity-20" />
               </div>
@@ -184,7 +186,7 @@ onMounted(async () => {
               </div>
             </div>
             <div
-              class="w-2/3 bg-[rgba(30,30,30,0.4)] p-4 max-h-[40vh] overflow-scroll no-scrollbar"
+              class="w-2/3 bg-[rgba(30,30,30,0.4)] p-4 max-h-[50vh] overflow-scroll no-scrollbar"
             >
               <div v-if="fetchEpisodesLoading">
                 <u-skeleton class="h-24 w-full opacity-20" />

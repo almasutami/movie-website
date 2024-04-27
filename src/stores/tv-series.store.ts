@@ -193,8 +193,6 @@ export const useTvSeriesStore = defineStore('tvSeries-store', {
       )
       this.fetchEpisodesLoading = false
 
-      console.log(response)
-
       return response?.episodes
     },
   },
