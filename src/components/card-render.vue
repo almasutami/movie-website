@@ -116,6 +116,7 @@ const isMovieCast = (obj: any): obj is MovieCast => {
               "
               :style="`background-image: url(${isMovie(object) || isTvSeries(object) ? getMoviePoster(object?.poster_path) : getMoviePoster(object?.profile_path)}); background-size: cover; background-position: center;`"
             />
+            {{ object }}
             <div
               v-if="props?.type === 'movies' || props?.type === 'tv-series'"
               class="absolute inset-0 hidden group-hover:flex group-hover:flex-col group-hover:gap-4 group-hover:justify-center group-hover:items-center z-10 bg-[rgba(30,30,30,0.5)]"

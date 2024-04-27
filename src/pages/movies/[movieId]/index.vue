@@ -76,18 +76,33 @@ onMounted(async () => {
               </div>
             </div>
 
-            <!-- rating -->
+            <!-- rating , runtime, language -->
             <div
-              class="flex flex-row gap-2 items-center my-2 text-sm lg:text-base"
+              class="flex flex-row gap-2 items-center text-sm lg:text-base"
               v-if="!listMovieLoading"
             >
-              <u-button
-                class="!p-0"
-                icon="i-heroicons-star-solid"
-                variant="link"
-                color="yellow"
-              />
-              <div>{{ currentMovie?.vote_average?.toFixed(1) }} / 10</div>
+              <div class="flex flex-row gap-2 items-center">
+                <u-button
+                  icon="i-heroicons-star-solid"
+                  variant="solid"
+                  color="yellow"
+                  :label="`${currentMovie?.vote_average?.toFixed(1)} / 10`"
+                />
+              </div>
+
+              <div class="flex flex-row gap-2 items-center">
+                <base-button
+                  icon="i-heroicons-clock"
+                  button-style="primary"
+                  :label="`${currentMovie?.runtime}`"
+                />
+              </div>
+              <div class="flex flex-row gap-2 items-center">
+                <base-button
+                  button-style="primary"
+                  :label="`${currentMovie?.original_language?.toUpperCase()}`"
+                />
+              </div>
             </div>
           </div>
           <!-- videos -->

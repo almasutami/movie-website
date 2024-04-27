@@ -88,7 +88,7 @@ watch(
         <div>
           <div class="flex flex-row gap-2 items-center mb-3">
             <div class="lg:text-2xl md:text-lg text-base">
-              Discover movies by genre
+              Discover Movies by Genre
             </div>
             <div class="align-middle">
               <u-tooltip

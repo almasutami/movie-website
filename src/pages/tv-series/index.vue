@@ -90,7 +90,7 @@ watch(
         <div>
           <div class="flex flex-row gap-2 items-center mb-3">
             <div class="lg:text-2xl md:text-lg text-base">
-              Discover Tv series by genre
+              Discover TV Series by Genre
             </div>
             <div class="align-middle">
               <u-tooltip

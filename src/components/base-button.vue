@@ -50,7 +50,7 @@ const buttonColor = computed(() => {
   let color = 'gray'
   switch (props.buttonStyle) {
     case 'primary':
-      color = 'gray'
+      color = 'black'
       break
     case 'secondary':
       color = 'white'
