@@ -40,7 +40,10 @@ const data = computed(() => {
 
 <template>
   <div class="lg:px-16 md:px-8 px-4 text-white py-2">
-    <div class="flex flex-row justify-between items-baseline">
+    <div
+      v-if="props?.mode !== 'full-page'"
+      class="flex flex-row justify-between items-baseline"
+    >
       <div class="lg:text-2xl md:text-lg text-base">
         {{ sentenceCase(props?.type) }}
       </div>

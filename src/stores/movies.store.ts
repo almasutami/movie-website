@@ -25,7 +25,7 @@ export interface MovieDetails {
   backdrop_path: string
   belongs_to_collection: null
   budget: number
-  genres: Genre[]
+  movieGenres: Genre[]
   homepage: string
   id: number
   imdb_id: number
@@ -71,7 +71,7 @@ interface State {
   listMovieLoading: boolean
   listMovieGenreLoading: boolean
   moviesInDiscoverPage: Movie[]
-  genres: Genre[]
+  movieGenres: Genre[]
 }
 
 export const useMovieStore = defineStore('movie-store', {
@@ -81,7 +81,7 @@ export const useMovieStore = defineStore('movie-store', {
     currentMovie: undefined,
     listMovieGenreLoading: false,
     moviesInDiscoverPage: [],
-    genres: [],
+    movieGenres: [],
   }),
   actions: {
     async fetchAllMovieGenres() {
@@ -91,7 +91,7 @@ export const useMovieStore = defineStore('movie-store', {
       )
       this.listMovieGenreLoading = false
 
-      this.genres = response?.genres
+      this.movieGenres = response?.genres
 
       return response
     },
@@ -122,7 +122,7 @@ export const useMovieStore = defineStore('movie-store', {
   },
   getters: {
     getGenreName: (state) => (id: number) => {
-      return state?.genres?.find((genre) => genre?.id === id)?.name
+      return state?.movieGenres?.find((genre) => genre?.id === id)?.name
     },
   },
 })

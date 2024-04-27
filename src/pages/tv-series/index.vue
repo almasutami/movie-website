@@ -14,7 +14,6 @@ const startInfiniteScroll = () => {
   useInfiniteScroll(
     el,
     async () => {
-      console.log('load more')
       currentPage.value++
       await discoverTvSeries('', currentPage.value)
     },
@@ -26,7 +25,6 @@ const stopInfiniteScroll = () => {
   useInfiniteScroll(
     el,
     async () => {
-      console.log('load more')
       currentPage.value++
       await discoverTvSeries('', currentPage.value)
     },
