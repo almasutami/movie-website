@@ -6,8 +6,11 @@ import CardRender from 'components/card-render.vue'
 const movieStore = useMovieStore()
 const { moviesInLandingPage, listMovieGenreLoading, listMovieLoading } =
   storeToRefs(movieStore)
-const { listPopularMoviesForLandingPage, getGenreName, fetchAllMovieGenres } =
-  useMovieStore()
+const {
+  listPopularMoviesForLandingPage,
+  getMovieGenreName,
+  fetchAllMovieGenres,
+} = useMovieStore()
 const tvSeriesStore = useTvSeriesStore()
 const { tvSeriesInLandingPage, listTvSeriesLoading } =
   storeToRefs(tvSeriesStore)
@@ -65,7 +68,7 @@ const popularMovies = computed(() => moviesInLandingPage.value.slice(1))
               :key="genreId"
             >
               <u-badge color="black" variant="solid">{{
-                getGenreName(genreId)
+                getMovieGenreName(genreId)
               }}</u-badge>
             </div>
             <div v-if="featuredMovie?.genre_ids?.length > 3">

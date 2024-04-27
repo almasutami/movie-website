@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia'
 import { fetchAPI } from 'utils/fetch-url'
-
+interface Genre {
+  id: number
+  name: string
+}
 export interface TvSeries {
   adult: boolean
   backdrop_path: string
@@ -20,16 +23,31 @@ export interface TvSeries {
 interface State {
   tvSeriesInLandingPage: TvSeries[]
   listTvSeriesLoading: boolean
+  listTvSeriesGenreLoading: boolean
   tvSeriesInDiscoverPage: TvSeries[]
+  tvSeriesGenres: Genre[]
 }
 
 export const useTvSeriesStore = defineStore('tvSeries-store', {
   state: (): State => ({
     tvSeriesInLandingPage: [],
     listTvSeriesLoading: false,
+    listTvSeriesGenreLoading: false,
     tvSeriesInDiscoverPage: [],
+    tvSeriesGenres: [],
   }),
   actions: {
+    async fetchAllTvSeriesGenres() {
+      this.listTvSeriesGenreLoading = true
+      const response = await fetchAPI(
+        'https://api.themoviedb.org/3/genre/tv/list'
+      )
+      this.listTvSeriesGenreLoading = false
+
+      this.tvSeriesGenres = response?.genres
+
+      return response
+    },
     async listPopularTvSeriesForLandingPage() {
       this.listTvSeriesLoading = true
       const response = await fetchAPI(
@@ -45,7 +63,7 @@ export const useTvSeriesStore = defineStore('tvSeries-store', {
       this.listTvSeriesLoading = true
       const fetchUrl =
         url ||
-        `https://api.themoviedb.org/3/discover/movie?page=${page}&sort_by=popularity.desc`
+        `https://api.themoviedb.org/3/discover/tv?page=${page}&sort_by=popularity.desc`
       const response = await fetchAPI(fetchUrl)
 
       this.listTvSeriesLoading = false
@@ -53,6 +71,11 @@ export const useTvSeriesStore = defineStore('tvSeries-store', {
       this.tvSeriesInDiscoverPage = newArray
 
       return response
+    },
+  },
+  getters: {
+    getTvSeriesGenreName: (state) => (id: number) => {
+      return state?.tvSeriesGenres?.find((genre) => genre?.id === id)?.name
     },
   },
 })

@@ -121,7 +121,7 @@ export const useMovieStore = defineStore('movie-store', {
     },
   },
   getters: {
-    getGenreName: (state) => (id: number) => {
+    getMovieGenreName: (state) => (id: number) => {
       return state?.movieGenres?.find((genre) => genre?.id === id)?.name
     },
   },
