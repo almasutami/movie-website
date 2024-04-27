@@ -229,8 +229,6 @@ export const useMovieStore = defineStore('movie-store', {
         })
       })
       this.moviesAndTvSeriesInSearch = combinedArray
-
-      console.log(this.moviesAndTvSeriesInSearch)
     },
   },
   getters: {

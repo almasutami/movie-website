@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "spell-check": "cspell .",
     "lint": "eslint \"src/**/*.{js,ts,json,vue}\"",
-    "lint:fix": "eslint \"src/**/*.{js,ts,json,vue}\" --fix"
+    "lint:fix": "eslint \"src/**/*.{js,ts,json,vue}\" --fix",
+    "e2e": "npx playwright test"
   },
   "dependencies": {
     "@nuxt/ui": "^2.15.2",
@@ -25,6 +26,8 @@
   "devDependencies": {
     "@babel/core": "^7.24.4",
     "@nuxt/eslint": "^0.3.10",
+    "@playwright/test": "^1.43.1",
+    "@types/node": "^20.12.7",
     "autoprefixer": "^10.4.19",
     "cspell": "^8.7.0",
     "eslint": "^9.1.1",

@@ -3,6 +3,9 @@ import logoDarkBg from '@/assets/icons-and-logos/logo-dark-bg.png'
 import BaseButton from 'components/base-button.vue'
 
 const isScrolled = ref(false)
+const router = useRouter()
+const movieStore = useMovieStore()
+const { searchQuery } = storeToRefs(movieStore)
 
 const handleScroll = () => {
   const scrollPosition = window.scrollY
@@ -77,14 +80,22 @@ const tabItems = [
 
         <div>
           <ul class="ml-4 flex space-x-4">
-            <nuxt-link to="/search">
-              <base-button
-                size="sm"
-                button-style="link"
-                icon="i-heroicons-magnifying-glass"
-              />
-            </nuxt-link>
-            <base-button button-style="secondary" size="sm" label="Login" />
+            <u-input
+              size="xl"
+              icon="i-heroicons-magnifying-glass-20-solid"
+              variant="none"
+              class="w-full"
+              :model-value="searchQuery"
+              @change="
+                (value: string) => {
+                  searchQuery = value
+                  if (value.length >= 3) {
+                    router.push('/search')
+                  }
+                }
+              "
+              placeholder="Search by title..."
+            ></u-input>
           </ul>
         </div>
       </div>

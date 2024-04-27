@@ -3,7 +3,8 @@ import { storeToRefs } from 'pinia'
 import CardRender from 'components/card-render.vue'
 
 const movieStore = useMovieStore()
-const { moviesAndTvSeriesInSearch, searchQuery } = storeToRefs(movieStore)
+const { moviesAndTvSeriesInSearch, searchQuery, listMovieLoading } =
+  storeToRefs(movieStore)
 const { fetchMoviesAndTvSeries } = useMovieStore()
 
 const fetchMoviesAndTvSeriesInSearch = async () => {
@@ -56,6 +57,7 @@ watch(
       <!-- list all search result -->
       <card-render
         mode="full-page"
+        :loading="listMovieLoading"
         :movies="moviesAndTvSeriesInSearch as Movie[]"
         type="movies"
       />
